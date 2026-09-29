@@ -1,0 +1,299 @@
+{% extends "base.html" %}
+{% block title %}Budget page {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/budget.css')}}">
+{% endblock %}
+
+{% block content %}
+<main class="container">
+
+    <div class="heading">
+        <h1>Trip Budget</h1>
+        <p>Estimated expenses for your complete trip.</p>
+    </div>
+
+
+    <!-- Trip Header -->
+    <div class="trip-header">
+
+        <h2>Mumbai → Goa</h2>
+
+        <div class="trip-details">
+            <span>📅 5 Days</span>
+            <span>👥 3 Travelers</span>
+            <span>🚆 Train</span>
+        </div>
+
+    </div>
+
+
+    <!-- Budget Options -->
+    <div class="budget-options">
+
+        <div class="budget-option">
+
+            <h3>Minimum Budget</h3>
+
+            <div class="amount">
+                ₹18,000
+            </div>
+
+            <p style="color:#6b7280; font-size:12px; margin-top:7px;">
+                Basic trip
+            </p>
+
+        </div>
+
+
+        <div class="budget-option recommended">
+
+            <h3>Recommended Budget</h3>
+
+            <div class="amount">
+                ₹25,000
+            </div>
+
+            <span class="recommended-label">
+                RECOMMENDED
+            </span>
+
+        </div>
+
+
+        <div class="budget-option">
+
+            <h3>Maximum Budget</h3>
+
+            <div class="amount">
+                ₹35,000
+            </div>
+
+            <p style="color:#6b7280; font-size:12px; margin-top:7px;">
+                Comfortable trip
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid">
+
+        <!-- Expense Breakdown -->
+        <div class="card">
+
+            <h2>💰 Expense Breakdown</h2>
+
+
+            <!-- Transport -->
+            <div class="expense">
+
+                <div class="expense-left">
+
+                    <div class="expense-icon">
+                        🚆
+                    </div>
+
+                    <div>
+                        <div class="expense-name">
+                            Transportation
+                        </div>
+
+                        <div class="expense-detail">
+                            Train tickets for 3 travelers
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="expense-price">
+                    ₹3,000
+                </div>
+
+            </div>
+
+
+            <!-- Accommodation -->
+            <div class="expense">
+
+                <div class="expense-left">
+
+                    <div class="expense-icon">
+                        🏨
+                    </div>
+
+                    <div>
+                        <div class="expense-name">
+                            Accommodation
+                        </div>
+
+                        <div class="expense-detail">
+                            Standard hotel for 4 nights
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="expense-price">
+                    ₹8,000
+                </div>
+
+            </div>
+
+
+            <!-- Food -->
+            <div class="expense">
+
+                <div class="expense-left">
+
+                    <div class="expense-icon">
+                        🍴
+                    </div>
+
+                    <div>
+                        <div class="expense-name">
+                            Food
+                        </div>
+
+                        <div class="expense-detail">
+                            Breakfast, lunch and dinner
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="expense-price">
+                    ₹6,000
+                </div>
+
+            </div>
+
+
+            <!-- Activities -->
+            <div class="expense">
+
+                <div class="expense-left">
+
+                    <div class="expense-icon">
+                        🎯
+                    </div>
+
+                    <div>
+                        <div class="expense-name">
+                            Activities
+                        </div>
+
+                        <div class="expense-detail">
+                            Sightseeing and water sports
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="expense-price">
+                    ₹5,000
+                </div>
+
+            </div>
+
+
+            <!-- Other -->
+            <div class="expense">
+
+                <div class="expense-left">
+
+                    <div class="expense-icon">
+                        💳
+                    </div>
+
+                    <div>
+                        <div class="expense-name">
+                            Other Expenses
+                        </div>
+
+                        <div class="expense-detail">
+                            Shopping, local travel and misc.
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="expense-price">
+                    ₹3,000
+                </div>
+
+            </div>
+
+
+            <!-- Total -->
+            <div class="total">
+
+                <span>
+                    Total Estimated Cost
+                </span>
+
+                <span>
+                    ₹25,000
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Tips -->
+        <div class="card">
+
+            <h2>💡 Budget Tips</h2>
+
+
+            <div class="tip">
+                🚆 <b>Transportation:</b>
+                Booking train tickets early can help reduce travel costs.
+            </div>
+
+
+            <div class="tip">
+                🏨 <b>Accommodation:</b>
+                Choosing a budget hotel can save around ₹3,000.
+            </div>
+
+
+            <div class="tip">
+                🍴 <b>Food:</b>
+                Local restaurants can provide affordable meals.
+            </div>
+
+
+            <div class="tip">
+                🎯 <b>Activities:</b>
+                Choose free sightseeing locations to reduce expenses.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Buttons -->
+    <div class="buttons">
+
+        <a href="/itinerary" class="btn outline">
+            ← View Itinerary
+        </a>
+
+        <a href="/trip-result" class="btn primary">
+            ← Back to Trip
+        </a>
+
+    </div>
+
+</main>
+{% endblock %}
+
+
+{% block extra_js %}
+<script>console.log("TravelWise Budget Page Loaded");</script>
+
+{% endblock %}

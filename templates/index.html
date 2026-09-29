@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block title %}
+Main home page
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+{% endblock%}
+
+
+{% block content %}
+<div class="row g-3">
+    <!-- LEFT -->
+    <div class="col-xl-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+
+                <div class="d-flex gap-3 border-bottom pb-3 mb-3">
+                    <div class="fs-1 text-primary">✈</div>
+                    <div>
+                        <h1 class="h4 mb-1">Plan Your Trip</h1>
+                        <p class="text-secondary small mb-0">Tell us your preferences and we'll plan the perfect trip
+                            for
+                            you.</p>
+                    </div>
+                </div>
+
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-5">
+                        <label class="form-label small fw-bold">From (Start)</label>
+                        <select class="form-select">
+                            <option>Delhi (DEL)</option>
+                            <option>Pune (PNQ)</option>
+                            <option>Mumbai (BOM)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 text-center"><button class="btn btn-light border">⇄</button></div>
+                    <div class="col-md-5">
+                        <label class="form-label small fw-bold">To (Destination)</label>
+                        <select class="form-select" id="destination">
+                            <option>Goa (GOI)</option>
+                            <option>Patna (PAT)</option>
+                            <option>Jaipur (JAI)</option>
+                            <option>Manali</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row g-3 mt-1">
+                    <div class="col-md-3"><label class="form-label small fw-bold">Departure</label><input type="date"
+                            class="form-control" value="2026-10-10"></div>
+                    <div class="col-md-3"><label class="form-label small fw-bold">Return</label><input type="date"
+                            class="form-control" value="2026-10-15"></div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Travelers</label>
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary" onclick="changePeople(-1)">−</button>
+                            <input id="people" class="form-control text-center" value="4" readonly>
+                            <button class="btn btn-outline-secondary" onclick="changePeople(1)">+</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3"><label class="form-label small fw-bold">Budget</label>
+                        <div class="input-group"><span class="input-group-text">₹</span><input id="budget" type="number"
+                                class="form-control" value="20000"></div>
+                    </div>
+                </div>
+
+                <hr>
+                <h6>Preferred Transportation <small class="text-secondary fw-normal">(Select one or more)</small></h6>
+                <div class="row g-2">
+                    <div class="col-6 col-md-3"><button class="choice selected w-100" onclick="toggleChoice(this)">🚆
+                            Train</button></div>
+                    <div class="col-6 col-md-3"><button class="choice selected w-100" onclick="toggleChoice(this)">🚌
+                            Bus</button></div>
+                    <div class="col-6 col-md-3"><button class="choice w-100" onclick="toggleChoice(this)">✈️
+                            Flight</button></div>
+                    <div class="col-6 col-md-3"><button class="choice w-100" onclick="toggleChoice(this)">🚗
+                            Car</button>
+                    </div>
+                </div>
+
+                <hr>
+                <h6>What interests you? <small class="text-secondary fw-normal">(Select all that apply)</small></h6>
+                <div class="row g-2">
+                    <div class="col-6 col-md-2"><button class="choice selected w-100" onclick="toggleChoice(this)">🏖️
+                            Beach</button></div>
+                    <div class="col-6 col-md-2"><button class="choice selected w-100" onclick="toggleChoice(this)">🌲
+                            Nature</button></div>
+                    <div class="col-6 col-md-2"><button class="choice w-100" onclick="toggleChoice(this)">🏛️
+                            History</button></div>
+                    <div class="col-6 col-md-2"><button class="choice w-100" onclick="toggleChoice(this)">🧗
+                            Adventure</button></div>
+                    <div class="col-6 col-md-2"><button class="choice selected w-100" onclick="toggleChoice(this)">🍴
+                            Food</button></div>
+                    <div class="col-6 col-md-2"><button class="choice w-100" onclick="toggleChoice(this)">🛍️
+                            Shopping</button></div>
+                </div>
+
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Accommodation</h6>
+                        <button class="choice">💼 Budget</button><button class="choice selected">🏨
+                            Standard</button><button class="choice">👑 Luxury</button>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Trip Type</h6>
+                        <button class="choice selected">🌴 Leisure</button><button class="choice">👨‍👩‍👧
+                            Family</button><button class="choice">🎒 Adventure</button>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary w-100 mt-4 py-2 fw-bold" onclick="planTrip()">✦ Plan My Trip</button>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-1">
+            <div class="col-md-6">
+                <div class="alert suggestion h-100"><b>💡 Smart Suggestion</b>
+                    <p id="suggestion" class="small mt-2 mb-0">Goa is perfect for beach lovers! Best time to visit is
+                        Oct
+                        – Mar.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="alert ai h-100"><b>✦ AI Assistant</b>
+                    <p class="small mt-2 mb-0">Ask me anything about your trip...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col-xl-5">
+
+        <div class="card border-success-subtle mb-3">
+            <div class="card-body recommended">
+                <div class="d-flex gap-3">
+                    <div class="fs-2 text-success">★</div>
+                    <div>
+                        <h5>Recommended Trip <span class="badge text-success bg-success-subtle">Balanced</span></h5>
+                        <p class="small text-secondary mb-0">Best balance between cost, time & experience</p>
+                    </div>
+                </div>
+                <div class="row text-center bg-white rounded border mt-3">
+                    <div class="col-4 py-3 border-end"><small>Total Cost</small>
+                        <h4 id="total" class="text-success">₹17,850</h4><small>/ ₹20,000</small>
+                    </div>
+                    <div class="col-4 py-3 border-end"><small>Duration</small>
+                        <h4 class="text-success">5 Days</h4><small>4 Nights</small>
+                    </div>
+                    <div class="col-4 py-3"><small>Travelers</small>
+                        <h4 id="summary" class="text-success">4</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-3">
+            <div class="card-body">
+                <h6>✣ Budget Breakdown</h6>
+                <div class="row align-items-center">
+                    <div class="col-md-5">
+                        <div class="donut"><b>₹17,850</b><small>Total</small></div>
+                    </div>
+                    <div class="col-md-7 small">
+                        <p>🔵 Transportation <b class="float-end">₹3,200</b></p>
+                        <p>🟣 Accommodation <b class="float-end">₹6,000</b></p>
+                        <p>🟢 Food <b class="float-end">₹4,000</b></p>
+                        <p>🟠 Local Travel <b class="float-end">₹1,650</b></p>
+                        <p>🔴 Activities <b class="float-end">₹1,500</b></p>
+                        <p>🟢 Buffer <b class="float-end">₹1,500</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h6>5 Days Itinerary Preview</h6><a href="{{url_for('itinerary')}}" class="small">View Full Itinerary →</a>
+                </div>
+                <ul class="nav nav-tabs mt-2">
+                    <li class="nav-item"><button class="nav-link active">Day 1</button></li>
+                    <li class="nav-item"><button class="nav-link">Day 2</button></li>
+                    <li class="nav-item"><button class="nav-link">Day 3</button></li>
+                    <li class="nav-item"><button class="nav-link">Day 4</button></li>
+                    <li class="nav-item"><button class="nav-link">Day 5</button></li>
+                </ul>
+                <div class="mt-3 small">
+                    <p><b>08:30 AM</b> — Departure from Delhi<br><span class="text-secondary">Train 12951 · Goa
+                            Express</span></p>
+                    <p><b>04:45 PM</b> — Arrival in Goa<br><span class="text-secondary">Check-in to Hotel</span></p>
+                    <p><b>06:00 PM</b> — Baga Beach<br><span class="text-secondary">Enjoy the sunset</span></p>
+                    <p><b>08:30 PM</b> — Dinner at Britto's<br><span class="text-secondary">Famous Goan Cuisine</span>
+                    </p>
+                </div>
+                <div class="beach">🌴 🌴<span>Baga Beach, Goa</span></div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h6>Route Overview</h6>
+                <div class="map"><span class="delhi">📍 Delhi</span><span class="goa">📍 Goa</span><span
+                        class="route">┈┈┈┈┈➜</span><b>INDIA</b></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<div id="message" class="toast-message">
+    Trip planning started!
+</div>
+
+
+<a href="{{url_for('budget')}}">
+<button>Click me</button></a>
+<a href="{{url_for('tripresult')}}">
+<button>Click me</button></a>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+{% endblock %}

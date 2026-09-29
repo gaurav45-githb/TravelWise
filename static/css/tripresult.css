@@ -1,0 +1,282 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+/* Navbar */
+.navbar {
+    height: 70px;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+}
+
+.logo {
+    color: #2563eb;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 14px;
+}
+
+.nav-links a:hover {
+    color: #2563eb;
+}
+
+/* Main */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 35px auto;
+}
+
+.page-title {
+    margin-bottom: 25px;
+}
+
+.page-title h1 {
+    font-size: 30px;
+    margin-bottom: 7px;
+}
+
+.page-title p {
+    color: #6b7280;
+}
+
+/* Trip Header */
+.trip-header {
+    background: #2563eb;
+    color: white;
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+}
+
+.trip-route {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.trip-info {
+    display: flex;
+    gap: 30px;
+    font-size: 14px;
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    font-size: 19px;
+    margin-bottom: 18px;
+}
+
+/* Option */
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.option:last-child {
+    border-bottom: none;
+}
+
+.option-left {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.icon {
+    width: 42px;
+    height: 42px;
+    background: #eff6ff;
+    color: #2563eb;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.option-name {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.option-detail {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.price {
+    font-weight: bold;
+}
+
+/* Budget */
+.budget-card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+}
+
+.budget-title {
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.budget-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 11px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.budget-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.budget-range {
+    margin-top: 20px;
+}
+
+.range-item {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #f8fafc;
+}
+
+.range-item span {
+    display: block;
+    color: #6b7280;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 12px 20px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-outline {
+    border: 1px solid #2563eb;
+    color: #2563eb;
+    background: white;
+}
+
+.btn-outline:hover {
+    background: #eff6ff;
+}
+
+/* Suggestion */
+.suggestion {
+    background: #eff6ff;
+    border-left: 4px solid #2563eb;
+    padding: 15px;
+    border-radius: 7px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Mobile */
+@media (max-width: 750px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .trip-route {
+        font-size: 20px;
+    }
+
+    .trip-info {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        text-align: center;
+    }
+}

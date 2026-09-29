@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}TravelWise{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Your CSS -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+    
+    <style>
+        body {
+            background: #f6f8fb;
+            color: #16233a;
+        }
+
+        .navbar-brand span {
+            color: #1769e8;
+        }
+
+        .sidebar {
+            min-height: calc(100vh - 58px);
+            background: #15243a;
+        }
+
+        .sidebar .nav-link {
+            width: 100%;
+            color: #fff;
+            text-align: left;
+            margin-bottom: 4px;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background: #286ee0;
+        }
+
+        .promo {
+            background: #f3f6ff;
+            color: #1b3d91;
+            border-radius: 12px;
+            padding: 18px 8px;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+        }
+    </style>
+    {% block extra_css%}{% endblock %}
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar bg-white border-bottom px-3">
+
+        <a class="navbar-brand fw-bold fs-4" href="{{ url_for('main') }}">
+            ✈ Travel<span>Wise</span>
+        </a>
+
+        <div>
+            ☀ &nbsp;
+            🔔 &nbsp;
+            👤 Rohit Kumar ▾
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN LAYOUT ================= -->
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- ================= SIDEBAR ================= -->
+
+            <aside class="col-lg-2 sidebar p-3">
+
+                <a href="{{ url_for('main') }}">
+                    <button class="nav-link active">
+                        🌐 Plan Trip
+                    </button>
+                </a>
+
+                <a href="{{ url_for('mytrips') }}">
+                    <button class="nav-link">
+                        ▣ My Trips
+                    </button>
+                </a>
+
+                <button class="nav-link">
+                    ♡ Saved Trips
+                </button>
+
+                <button class="nav-link">
+                    💰 Budget Planner
+                </button>
+
+                <button class="nav-link">
+                    ✦ AI Assistant
+                </button>
+
+                <button class="nav-link">
+                    ⌖ Explore Places
+                </button>
+
+                <button class="nav-link">
+                    ⚙ Settings
+                </button>
+
+                <button class="nav-link">
+                    ❔ Help & Support
+                </button>
+
+
+                <!-- PROMO BOX -->
+
+                <div class="promo mt-5 text-center">
+
+                    <div class="fs-1">
+                        🗺️ 🧳
+                    </div>
+
+                    <h5>
+                        Plan smarter,<br>
+                        travel better.
+                    </h5>
+
+                    <p class="small text-secondary">
+                        AI-powered trip planning
+                    </p>
+
+                    <button class="btn btn-outline-primary btn-sm">
+                        Learn More
+                    </button>
+
+                </div>
+
+            </aside>
+
+
+            <!-- ================= PAGE CONTENT ================= -->
+
+            <main class="col-lg-10 p-3">
+
+                {% block content %}
+
+                {% endblock %}
+
+            </main>
+
+        </div>
+    </div>
+
+
+    <!-- JavaScript -->
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

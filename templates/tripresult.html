@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+{% block title %}Trip trip-result page {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/tripresult.css')}}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Main Content -->
+<main class="container">
+
+    <div class="page-title">
+        <h1>Your Trip Plan</h1>
+        <p>Here is your personalized travel plan.</p>
+    </div>
+
+
+    <!-- Trip Header -->
+    <div class="trip-header">
+
+        <div class="trip-route">
+            <span>Mumbai</span>
+            <span>→</span>
+            <span>Goa</span>
+        </div>
+
+        <div class="trip-info">
+            <span>📅 5 Days</span>
+            <span>👥 3 Travelers</span>
+            <span>🚆 Train</span>
+        </div>
+
+    </div>
+
+
+    <div class="grid">
+
+        <!-- Left Column -->
+        <div>
+
+            <!-- Transportation -->
+            <div class="card">
+
+                <h2>🚆 Transportation</h2>
+
+                <div class="option">
+
+                    <div class="option-left">
+
+                        <div class="icon">🚆</div>
+
+                        <div>
+                            <div class="option-name">
+                                Train
+                            </div>
+
+                            <div class="option-detail">
+                                Mumbai → Goa • Approx. 10 hours
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="price">
+                        ₹3,000
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Accommodation -->
+            <div class="card">
+
+                <h2>🏨 Accommodation</h2>
+
+                <div class="option">
+
+                    <div class="option-left">
+
+                        <div class="icon">🏨</div>
+
+                        <div>
+                            <div class="option-name">
+                                Standard Hotel
+                            </div>
+
+                            <div class="option-detail">
+                                4 Nights • Good location • ⭐ 4.2
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="price">
+                        ₹8,000
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Food -->
+            <div class="card">
+
+                <h2>🍴 Food</h2>
+
+                <div class="option">
+
+                    <div class="option-left">
+
+                        <div class="icon">🍴</div>
+
+                        <div>
+                            <div class="option-name">
+                                Local & Regular Food
+                            </div>
+
+                            <div class="option-detail">
+                                Estimated food cost for 3 travelers
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="price">
+                        ₹6,000
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Activities -->
+            <div class="card">
+
+                <h2>🎯 Activities</h2>
+
+                <div class="option">
+
+                    <div class="option-left">
+
+                        <div class="icon">🏖️</div>
+
+                        <div>
+                            <div class="option-name">
+                                Beach & Sightseeing
+                            </div>
+
+                            <div class="option-detail">
+                                Baga Beach, Fort Aguada, Candolim
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="price">
+                        ₹5,000
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Suggestion -->
+            <div class="card">
+
+                <h2>💡 Smart Suggestion</h2>
+
+                <div class="suggestion">
+
+                    You can reduce your trip cost by around
+                    <b>₹3,000</b> by choosing a budget hotel
+                    and traveling by bus instead of train.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Right Column -->
+        <div>
+
+            <!-- Budget -->
+            <div class="budget-card">
+
+                <div class="budget-title">
+                    💰 Trip Budget
+                </div>
+
+                <div class="budget-item">
+                    <span>Transportation</span>
+                    <b>₹3,000</b>
+                </div>
+
+                <div class="budget-item">
+                    <span>Accommodation</span>
+                    <b>₹8,000</b>
+                </div>
+
+                <div class="budget-item">
+                    <span>Food</span>
+                    <b>₹6,000</b>
+                </div>
+
+                <div class="budget-item">
+                    <span>Activities</span>
+                    <b>₹5,000</b>
+                </div>
+
+                <div class="budget-item">
+                    <span>Other</span>
+                    <b>₹3,000</b>
+                </div>
+
+                <div class="budget-total">
+                    <span>Total</span>
+                    <span>₹25,000</span>
+                </div>
+
+            </div>
+
+
+            <!-- Budget Range -->
+            <div class="card">
+
+                <h2>Budget Range</h2>
+
+                <div class="budget-range">
+
+                    <div class="range-item">
+                        <span>Minimum</span>
+                        <b>₹18,000</b>
+                    </div>
+
+                    <div class="range-item">
+                        <span>Recommended</span>
+                        <b>₹25,000</b>
+                    </div>
+
+                    <div class="range-item">
+                        <span>Maximum</span>
+                        <b>₹35,000</b>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="buttons">
+
+                <a href="/itinerary" class="btn btn-primary">
+                    View Itinerary
+                </a>
+
+                <a href="/budget" class="btn btn-outline">
+                    View Budget
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script>console.log("TravelWise Budget Page Loaded");</script>
+
+{% endblock %}

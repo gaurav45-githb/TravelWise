@@ -1,0 +1,230 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+/* Navbar */
+.navbar {
+    height: 70px;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+}
+
+.logo {
+    color: #2563eb;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: #4b5563;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.nav-links a:hover {
+    color: #2563eb;
+}
+
+/* Main */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 35px auto;
+}
+
+.heading {
+    margin-bottom: 25px;
+}
+
+.heading h1 {
+    font-size: 30px;
+    margin-bottom: 7px;
+}
+
+.heading p {
+    color: #6b7280;
+}
+
+/* Trip Info */
+.trip-info {
+    background: #2563eb;
+    color: white;
+    padding: 22px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.trip-info h2 {
+    margin-bottom: 8px;
+}
+
+.trip-details {
+    display: flex;
+    gap: 25px;
+    font-size: 14px;
+}
+
+/* Day Card */
+.day-card {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+}
+
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.day-header h2 {
+    font-size: 20px;
+    color: #2563eb;
+}
+
+.day-date {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* Activity */
+.activity {
+    display: flex;
+    gap: 15px;
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.activity:last-child {
+    border-bottom: none;
+}
+
+.time {
+    width: 85px;
+    color: #2563eb;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    background: #eff6ff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-content h3 {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.activity-content p {
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.cost {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Button */
+.buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 11px 20px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.primary {
+    background: #2563eb;
+    color: white;
+}
+
+.outline {
+    border: 1px solid #2563eb;
+    color: #2563eb;
+    background: white;
+}
+
+.primary:hover {
+    background: #1d4ed8;
+}
+
+.outline:hover {
+    background: #eff6ff;
+}
+
+/* Mobile */
+@media (max-width: 650px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .trip-details {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .activity {
+        flex-wrap: wrap;
+    }
+
+    .time {
+        width: 100%;
+    }
+
+    .cost {
+        margin-left: 55px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        text-align: center;
+    }
+}

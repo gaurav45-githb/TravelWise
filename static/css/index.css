@@ -1,0 +1,178 @@
+body {
+    background: #f6f8fb;
+    color: #16233a
+}
+
+.navbar-brand span {
+    color: #1769e8
+}
+
+.sidebar {
+    min-height: calc(100vh - 58px);
+    background: #15243a
+}
+
+.sidebar .nav-link {
+    width: 100%;
+    color: #fff;
+    text-align: left;
+    margin-bottom: 4px;
+    padding: 12px;
+    border-radius: 8px
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background: #286ee0
+}
+
+.promo {
+    background: #f3f6ff;
+    color: #1b3d91;
+    border-radius: 12px;
+    padding: 18px 8px
+}
+
+.card {
+    border-radius: 12px
+}
+
+.form-control,
+.form-select {
+    border-color: #dbe2ec
+}
+
+.choice {
+    border: 1px solid #dce3ed;
+    background: #fff;
+    color: #26344a;
+    border-radius: 7px;
+    padding: 10px 12px;
+    margin: 3px 2px
+}
+
+.choice:hover,
+.choice.selected {
+    border-color: #3476e9;
+    color: #1765df;
+    background: #f8fbff
+}
+
+.suggestion {
+    background: #fff9e9;
+    border: 1px solid #f1d98d
+}
+
+.ai {
+    background: #faf8ff;
+    border: 1px solid #d9ccff
+}
+
+.recommended {
+    background: #effcf4;
+    border-radius: 12px
+}
+
+.donut {
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    background: conic-gradient(#3278e8 0 18%, #7054dd 18% 52%, #65bb78 52% 75%, #f2a843 75% 84%, #c34d80 84% 92%, #52b998 92%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    position: relative
+}
+
+.donut:before {
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: #fff;
+    border-radius: 50%
+}
+
+.donut b,
+.donut small {
+    position: relative;
+    z-index: 1
+}
+
+.beach {
+    height: 110px;
+    border-radius: 10px;
+    padding: 12px;
+    color: #fff;
+    font-size: 30px;
+    background: linear-gradient(#f3bd78 0 35%, #3099b7 36% 70%, #dfb671 71%)
+}
+
+.beach span {
+    display: block;
+    font-size: 11px;
+    font-weight: bold
+}
+
+.map {
+    height: 190px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(120deg, #e8e4d0, #f5f0dc 50%, #d7e8e8)
+}
+
+.map>b {
+    position: absolute;
+    top: 80px;
+    left: 48%;
+    color: #999b88;
+    font-size: 20px
+}
+
+.delhi {
+    position: absolute;
+    top: 25px;
+    right: 20%;
+    color: #1769e8
+}
+
+.goa {
+    position: absolute;
+    bottom: 30px;
+    left: 32%;
+    color: #df4938
+}
+
+.route {
+    position: absolute;
+    top: 80px;
+    left: 38%;
+    color: #1769e8;
+    font-size: 20px;
+    transform: rotate(20deg)
+}
+
+.toast-message {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: #15243a;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    display: none
+}
+
+@media(max-width:991px) {
+    .sidebar {
+        min-height: auto
+    }
+
+    .sidebar .nav-link {
+        display: inline-block;
+        width: 49%
+    }
+}

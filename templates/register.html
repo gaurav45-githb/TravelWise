@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Register page {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/register.css')}}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Register -->
+<div class="register-container">
+
+    <div class="register-box">
+
+        <div class="register-icon">👤</div>
+
+        <h1>Create Account</h1>
+
+        <p class="subtitle">
+            Create an account to start planning your trips
+        </p>
+
+
+        <form id="registerForm">
+
+            <!-- Name -->
+            <div class="form-group">
+
+                <label>Full Name</label>
+
+                <input type="text" id="name" placeholder="Enter your name" required>
+
+            </div>
+
+
+            <!-- Email -->
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input type="email" id="email" placeholder="Enter your email" required>
+
+            </div>
+
+
+            <!-- Mobile -->
+            <div class="form-group">
+
+                <label>Mobile Number</label>
+
+                <input type="tel" id="mobile" placeholder="Enter your mobile number" maxlength="10" required>
+
+            </div>
+
+
+            <!-- Password -->
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input type="password" id="password" placeholder="Create a password" required>
+
+            </div>
+
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+
+                <label>Confirm Password</label>
+
+                <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+
+                <p class="error" id="error">
+                    Passwords do not match.
+                </p>
+
+            </div>
+
+
+            <!-- Button -->
+            <button type="submit" class="register-btn">
+                Create Account
+            </button>
+
+            <p class="success" id="success">
+                Account created successfully!
+            </p>
+
+        </form>
+
+
+        <!-- Login -->
+        <p class="login-text">
+
+            Already have an account?
+
+            <a href="{{url_for('login')}}">
+                Login
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+    document.getElementById("registerForm").addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        let password = document.getElementById("password").value;
+        let confirmPassword = document.getElementById("confirmPassword").value;
+
+        let error = document.getElementById("error");
+        let success = document.getElementById("success");
+
+        if (password !== confirmPassword) {
+
+            error.style.display = "block";
+            success.style.display = "none";
+
+            return;
+        }
+
+        error.style.display = "none";
+        success.style.display = "block";
+
+    });
+
+</script>
+
+{% endblock %}
