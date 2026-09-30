@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
+from models import db
 
 load_dotenv()
 
@@ -12,6 +13,8 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db.init_app(app)
 
 @app.route("/")
 def home():
@@ -48,7 +51,7 @@ def tripresult():
  
 if __name__ == "__main__":
 
-    # with app.app_context():
-    #     db.create_all()
+    with app.app_context():
+        db.create_all()
 
     app.run(debug=True, port=5005)
