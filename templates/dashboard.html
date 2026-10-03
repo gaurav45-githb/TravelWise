@@ -1,0 +1,492 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - TravelWise{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+
+    <!-- ================= HERO GREETING BANNER ================= -->
+    <div class="dashboard-hero">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="hero-tag">
+                    <span>✨</span> TravelWise Command Center
+                </div>
+                <h1>Welcome back, {{ current_user.name if current_user else 'Traveler' }}! 👋</h1>
+                <p>
+                    Track your upcoming journeys, inspect budget allocations, and discover curated recommendations for your next holiday.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                <div class="hero-actions justify-content-lg-end">
+                    <a href="{{ url_for('main') }}" class="btn-hero-primary">
+                        <i class="bi bi-plus-circle-fill"></i>
+                        <span>Plan New Trip</span>
+                    </a>
+                    <a href="{{ url_for('mytrips') }}" class="btn-hero-outline">
+                        <i class="bi bi-briefcase"></i>
+                        <span>My Trips</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= METRIC / STAT CARDS ================= -->
+    <div class="row g-3 mb-4">
+        <!-- Stat 1: Total Trips -->
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-icon icon-blue">
+                    <i class="bi bi-luggage-fill"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-title">Trips Planned</div>
+                    <div class="stat-value">
+                        {% if trips and trips|length > 0 %}
+                            {{ trips|length }}
+                        {% else %}
+                            3
+                        {% endif %}
+                    </div>
+                    <div class="stat-badge badge-trend-up">
+                        <i class="bi bi-arrow-up-short"></i> Active & Planned
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stat 2: Upcoming Journey -->
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-icon icon-green">
+                    <i class="bi bi-calendar-check-fill"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-title">Next Adventure</div>
+                    <div class="stat-value">Goa</div>
+                    <div class="stat-badge badge-trend-up">
+                        <i class="bi bi-clock-history"></i> In 7 Days
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stat 3: Budget Tracked -->
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-icon icon-purple">
+                    <i class="bi bi-wallet2"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-title">Tracked Budget</div>
+                    <div class="stat-value">₹45,800</div>
+                    <div class="stat-badge badge-trend-up">
+                        <i class="bi bi-shield-check"></i> On Budget
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stat 4: Places Explored -->
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-icon icon-amber">
+                    <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-title">Saved Places</div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-badge badge-trend-neutral">
+                        <i class="bi bi-bookmark-heart"></i> In Wishlist
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MAIN DASHBOARD BODY ================= -->
+    <div class="row g-4">
+
+        <!-- ================= LEFT COLUMN: TRIPS & EXPLORE ================= -->
+        <div class="col-xl-8">
+
+            <!-- Recent Trips Card -->
+            <div class="dashboard-card">
+                <div class="card-title-flex">
+                    <h5>
+                        <i class="bi bi-airplane-engines text-primary"></i>
+                        Recent & Upcoming Trips
+                    </h5>
+                    <a href="{{ url_for('mytrips') }}" class="card-action-link">
+                        View All <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+
+                {% if trips and trips|length > 0 %}
+                    <!-- Database Trips -->
+                    {% for trip in trips %}
+                    <div class="trip-item-card">
+                        <div class="trip-item-header">
+                            <div class="trip-route">
+                                <span>{{ trip.source }}</span>
+                                <span class="trip-arrow">→</span>
+                                <span>{{ trip.destination }}</span>
+                            </div>
+                            <span class="trip-status-badge status-{{ trip.trip_status or 'planned' }}">
+                                {{ trip.trip_status or 'Planned' }}
+                            </span>
+                        </div>
+                        <div class="trip-meta">
+                            <div class="trip-meta-item">
+                                <i class="bi bi-calendar3 text-primary"></i>
+                                <span>{{ trip.start_date.strftime('%d %b %Y') if trip.start_date else '10 Oct 2026' }} – {{ trip.end_date.strftime('%d %b %Y') if trip.end_date else '15 Oct 2026' }}</span>
+                            </div>
+                            <div class="trip-meta-item">
+                                <i class="bi bi-people-fill text-secondary"></i>
+                                <span>{{ trip.travelers }} Travelers</span>
+                            </div>
+                        </div>
+                        <div class="trip-footer-actions">
+                            <div class="trip-cost-tag">
+                                ₹18,500 <small>est. budget</small>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="{{ url_for('itinerary') }}" class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-map me-1"></i>Itinerary
+                                </a>
+                                <a href="{{ url_for('budget') }}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-cash me-1"></i>Budget
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Featured Showcase Trip -->
+                    <div class="trip-item-card">
+                        <div class="trip-item-header">
+                            <div class="trip-route">
+                                <span>Mumbai</span>
+                                <span class="trip-arrow">→</span>
+                                <span>Goa</span>
+                            </div>
+                            <span class="trip-status-badge status-planned">
+                                Planned
+                            </span>
+                        </div>
+                        <div class="trip-meta">
+                            <div class="trip-meta-item">
+                                <i class="bi bi-calendar3 text-primary"></i>
+                                <span>10 Oct 2026 – 15 Oct 2026</span>
+                            </div>
+                            <div class="trip-meta-item">
+                                <i class="bi bi-people-fill text-secondary"></i>
+                                <span>3 Travelers</span>
+                            </div>
+                            <div class="trip-meta-item">
+                                <i class="bi bi-train-front text-secondary"></i>
+                                <span>Express Train</span>
+                            </div>
+                        </div>
+                        <div class="trip-footer-actions">
+                            <div class="trip-cost-tag">
+                                ₹22,500 <small>est. total budget</small>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="{{ url_for('itinerary') }}" class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-map me-1"></i>Itinerary
+                                </a>
+                                <a href="{{ url_for('budget') }}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-cash me-1"></i>Budget
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second Trip Showcase -->
+                    <div class="trip-item-card">
+                        <div class="trip-item-header">
+                            <div class="trip-route">
+                                <span>Delhi</span>
+                                <span class="trip-arrow">→</span>
+                                <span>Manali</span>
+                            </div>
+                            <span class="trip-status-badge status-draft">
+                                Draft
+                            </span>
+                        </div>
+                        <div class="trip-meta">
+                            <div class="trip-meta-item">
+                                <i class="bi bi-calendar3 text-primary"></i>
+                                <span>01 Nov 2026 – 06 Nov 2026</span>
+                            </div>
+                            <div class="trip-meta-item">
+                                <i class="bi bi-people-fill text-secondary"></i>
+                                <span>2 Travelers</span>
+                            </div>
+                            <div class="trip-meta-item">
+                                <i class="bi bi-bus-front text-secondary"></i>
+                                <span>Volvo Bus</span>
+                            </div>
+                        </div>
+                        <div class="trip-footer-actions">
+                            <div class="trip-cost-tag">
+                                ₹16,800 <small>est. total budget</small>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="{{ url_for('itinerary') }}" class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-map me-1"></i>Itinerary
+                                </a>
+                                <a href="{{ url_for('budget') }}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-cash me-1"></i>Budget
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Trending Destinations / Quick Recommendation -->
+            <div class="dashboard-card">
+                <div class="card-title-flex">
+                    <h5>
+                        <i class="bi bi-compass text-primary"></i>
+                        Popular Destinations for You
+                    </h5>
+                    <a href="{{ url_for('main') }}" class="card-action-link">
+                        Explore All <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+
+                <div class="row g-3">
+                    <!-- Dest 1 -->
+                    <div class="col-md-4">
+                        <div class="dest-card">
+                            <div class="dest-badge-header">
+                                🏖️
+                                <span class="dest-tag">Top Pick</span>
+                            </div>
+                            <div class="dest-body">
+                                <div>
+                                    <div class="dest-name">Goa, India</div>
+                                    <div class="dest-desc">Sun-kissed beaches, watersports & vibrant nightlife.</div>
+                                </div>
+                                <div class="dest-footer">
+                                    <div class="dest-price">From ₹14,999</div>
+                                    <a href="{{ url_for('main') }}" class="btn btn-outline-primary btn-sm py-1 px-2">Plan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dest 2 -->
+                    <div class="col-md-4">
+                        <div class="dest-card">
+                            <div class="dest-badge-header">
+                                🏔️
+                                <span class="dest-tag">Mountain</span>
+                            </div>
+                            <div class="dest-body">
+                                <div>
+                                    <div class="dest-name">Manali, HP</div>
+                                    <div class="dest-desc">Pine valleys, Solang adventures & scenic passes.</div>
+                                </div>
+                                <div class="dest-footer">
+                                    <div class="dest-price">From ₹12,500</div>
+                                    <a href="{{ url_for('main') }}" class="btn btn-outline-primary btn-sm py-1 px-2">Plan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dest 3 -->
+                    <div class="col-md-4">
+                        <div class="dest-card">
+                            <div class="dest-badge-header">
+                                🏰
+                                <span class="dest-tag">Heritage</span>
+                            </div>
+                            <div class="dest-body">
+                                <div>
+                                    <div class="dest-name">Jaipur, Rajasthan</div>
+                                    <div class="dest-desc">Palaces, forts, vibrant bazaars & Rajasthani food.</div>
+                                </div>
+                                <div class="dest-footer">
+                                    <div class="dest-price">From ₹11,200</div>
+                                    <a href="{{ url_for('main') }}" class="btn btn-outline-primary btn-sm py-1 px-2">Plan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Recommendation snippet -->
+                <div class="ai-advisor-box mt-3">
+                    <div class="ai-advisor-header">
+                        <i class="bi bi-stars"></i>
+                        <span>AI Travel Smart Tip</span>
+                    </div>
+                    <p>
+                        Based on your travel interests, booking accommodation 2 weeks ahead in Goa saves an average of 18%. Weather conditions for October are optimal for outdoor coastal activities.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= RIGHT COLUMN: BUDGET & SHORTCUTS ================= -->
+        <div class="col-xl-4">
+
+            <!-- Budget Distribution Card -->
+            <div class="dashboard-card">
+                <div class="card-title-flex">
+                    <h5>
+                        <i class="bi bi-pie-chart-fill text-primary"></i>
+                        Budget Distribution
+                    </h5>
+                    <a href="{{ url_for('budget') }}" class="card-action-link">
+                        Details <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+
+                <div class="budget-donut-container">
+                    <div class="dashboard-donut">
+                        <div class="donut-inner-content">
+                            <div class="donut-amount">₹45.8k</div>
+                            <div class="donut-label">Allocated</div>
+                        </div>
+                    </div>
+
+                    <div class="budget-legend-list">
+                        <div class="legend-row">
+                            <div class="legend-label-group">
+                                <span class="legend-dot dot-transport"></span>
+                                <span>Transportation</span>
+                            </div>
+                            <div class="legend-values">
+                                ₹16,000 <small>(35%)</small>
+                            </div>
+                        </div>
+                        <div class="legend-row">
+                            <div class="legend-label-group">
+                                <span class="legend-dot dot-hotel"></span>
+                                <span>Hotels & Stay</span>
+                            </div>
+                            <div class="legend-values">
+                                ₹12,400 <small>(27%)</small>
+                            </div>
+                        </div>
+                        <div class="legend-row">
+                            <div class="legend-label-group">
+                                <span class="legend-dot dot-food"></span>
+                                <span>Food & Dining</span>
+                            </div>
+                            <div class="legend-values">
+                                ₹9,200 <small>(20%)</small>
+                            </div>
+                        </div>
+                        <div class="legend-row">
+                            <div class="legend-label-group">
+                                <span class="legend-dot dot-activity"></span>
+                                <span>Activities & Tours</span>
+                            </div>
+                            <div class="legend-values">
+                                ₹5,500 <small>(12%)</small>
+                            </div>
+                        </div>
+                        <div class="legend-row">
+                            <div class="legend-label-group">
+                                <span class="legend-dot dot-other"></span>
+                                <span>Emergency / Misc</span>
+                            </div>
+                            <div class="legend-values">
+                                ₹2,700 <small>(6%)</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="{{ url_for('budget') }}" class="btn btn-outline-primary btn-sm w-100 mt-3">
+                        <i class="bi bi-calculator me-1"></i> Open Full Budget Planner
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Navigation Shortcuts -->
+            <div class="dashboard-card">
+                <div class="card-title-flex">
+                    <h5>
+                        <i class="bi bi-grid-fill text-primary"></i>
+                        Quick Services
+                    </h5>
+                </div>
+
+                <div class="d-flex flex-column gap-2">
+                    <a href="{{ url_for('main') }}" class="quick-action-tile">
+                        <div class="action-tile-icon text-primary">
+                            ✈️
+                        </div>
+                        <div class="action-tile-text">
+                            <h6>Plan New Trip</h6>
+                            <p>Generate customized itineraries</p>
+                        </div>
+                    </a>
+
+                    <a href="{{ url_for('mytrips') }}" class="quick-action-tile">
+                        <div class="action-tile-icon text-success">
+                            🧳
+                        </div>
+                        <div class="action-tile-text">
+                            <h6>My Saved Trips</h6>
+                            <p>Manage and edit your travel routes</p>
+                        </div>
+                    </a>
+
+                    <a href="{{ url_for('itinerary') }}" class="quick-action-tile">
+                        <div class="action-tile-icon text-info">
+                            📅
+                        </div>
+                        <div class="action-tile-text">
+                            <h6>Day-by-Day Itinerary</h6>
+                            <p>Check schedules, timings & places</p>
+                        </div>
+                    </a>
+
+                    <a href="{{ url_for('tripresult') }}" class="quick-action-tile">
+                        <div class="action-tile-icon text-warning">
+                            ⭐
+                        </div>
+                        <div class="action-tile-text">
+                            <h6>Trip Results & Estimates</h6>
+                            <p>Compare transit and accommodation</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Travel Support / Need Help Card -->
+            <div class="dashboard-card bg-light border-0">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="fs-1 text-primary">
+                        🎧
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1">Need Travel Assistance?</h6>
+                        <p class="small text-secondary mb-2">Our AI Assistant and travel guides are available 24/7.</p>
+                        <a href="{{ url_for('main') }}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-chat-dots me-1"></i> Ask AI Assistant
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

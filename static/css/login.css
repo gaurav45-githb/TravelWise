@@ -10,37 +10,7 @@ body {
     color: #1f2937;
 }
 
-/* Navbar */
-.navbar {
-    height: 70px;
-    background: white;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 7%;
-}
-
-.logo {
-    color: #2563eb;
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.home-btn {
-    color: #2563eb;
-    border: 1px solid #2563eb;
-    padding: 9px 18px;
-    border-radius: 7px;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.home-btn:hover {
-    background: #2563eb;
-    color: white;
-}
+/* Standalone navbar rules removed to allow base.html navbar to render consistently */
 
 /* Login */
 .login-container {

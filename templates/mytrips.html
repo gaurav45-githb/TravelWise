@@ -19,9 +19,14 @@
             <p>View and manage your planned trips.</p>
         </div>
 
-        <a href="/" class="new-trip-btn">
-            + Plan New Trip
-        </a>
+        <div class="d-flex align-items-center gap-2">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-primary btn-sm px-3 fw-medium">
+                <i class="bi bi-speedometer2 me-1"></i> Dashboard
+            </a>
+            <a href="{{ url_for('main') }}" class="new-trip-btn">
+                + Plan New Trip
+            </a>
+        </div>
 
     </div>
 

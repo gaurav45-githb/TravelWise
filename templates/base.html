@@ -8,10 +8,10 @@
     <title>{% block title %}TravelWise{% endblock %}</title>
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Your CSS -->
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
@@ -57,26 +57,87 @@
         .sidebar a {
             text-decoration: none;
         }
+
+        /* Responsive sidebar for mobile and tablet */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                min-height: auto;
+                margin-bottom: 1rem;
+            }
+        }
     </style>
-    {% block extra_css%}{% endblock %}
+    {% block extra_css %}{% endblock %}
 </head>
 
 <body>
 
     <!-- ================= NAVBAR ================= -->
 
-    <nav class="navbar bg-white border-bottom px-3">
+    <nav class="navbar bg-white border-bottom px-3 py-2 sticky-top shadow-sm">
+        <div class="container-fluid px-0 d-flex justify-content-between align-items-center">
 
-        <a class="navbar-brand fw-bold fs-4" href="{{ url_for('main') }}">
-            ✈ Travel<span>Wise</span>
-        </a>
+            <a class="navbar-brand fw-bold fs-4 m-0 d-flex align-items-center" href="{{ url_for('main') }}">
+                ✈ Travel<span>Wise</span>
+            </a>
 
-        <div>
-            ☀ &nbsp;
-            🔔 &nbsp;
-            👤 Rohit Kumar ▾
+            <!-- Right section: Responsive Session Auth & Profile -->
+            <div class="d-flex align-items-center gap-2">
+                <span class="d-none d-sm-inline text-secondary cursor-pointer me-1" title="Theme" style="cursor: pointer;">☀</span>
+                <span class="d-none d-sm-inline text-secondary cursor-pointer me-2" title="Notifications" style="cursor: pointer;">🔔</span>
+
+                {% if current_user %}
+                    <!-- User in Session: Show Dashboard Option and DB User Name -->
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-primary btn-sm px-3 fw-medium d-flex align-items-center gap-1">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <div class="dropdown">
+                        <button class="btn btn-light btn-sm dropdown-toggle d-flex align-items-center gap-2 border px-2 py-1 shadow-sm" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle fs-6 text-primary"></i>
+                            <span class="fw-semibold text-truncate" style="max-width: 140px;">{{ current_user.name }}</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border" aria-labelledby="userMenuDropdown" style="min-width: 220px;">
+                            <li class="px-3 py-2 border-bottom bg-light">
+                                <small class="text-muted d-block" style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px;">Signed In As</small>
+                                <div class="fw-bold text-dark text-truncate">{{ current_user.name }}</div>
+                                <small class="text-secondary text-truncate d-block">{{ current_user.email }}</small>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="{{ url_for('dashboard') }}">
+                                    <i class="bi bi-speedometer2 text-primary"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2" href="{{ url_for('mytrips') }}">
+                                    <i class="bi bi-briefcase text-secondary"></i>
+                                    <span>My Trips</span>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider my-1"></li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center gap-2 text-danger" href="{{ url_for('logout') }}">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <!-- User NOT in Session: Show Login and Register buttons -->
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-sm px-3 fw-medium d-flex align-items-center gap-1">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        <span>Login</span>
+                    </a>
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-sm px-3 fw-medium d-flex align-items-center gap-1">
+                        <i class="bi bi-person-plus"></i>
+                        <span>Register</span>
+                    </a>
+                {% endif %}
+            </div>
+
         </div>
-
     </nav>
 
 
@@ -89,14 +150,20 @@
 
             <aside class="col-lg-2 sidebar p-3">
 
+                <a href="{{ url_for('dashboard') }}">
+                    <button class="nav-link {% if request.endpoint in ['dashboard', 'bashboard'] %}active{% endif %}">
+                        📊 Dashboard
+                    </button>
+                </a>
+
                 <a href="{{ url_for('main') }}">
-                    <button class="nav-link active">
+                    <button class="nav-link {% if request.endpoint in ['main', 'home'] %}active{% endif %}">
                         🌐 Plan Trip
                     </button>
                 </a>
 
                 <a href="{{ url_for('mytrips') }}">
-                    <button class="nav-link">
+                    <button class="nav-link {% if request.endpoint == 'mytrips' %}active{% endif %}">
                         ▣ My Trips
                     </button>
                 </a>
@@ -156,6 +223,18 @@
 
             <main class="col-lg-10 p-3">
 
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show shadow-sm" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
                 {% block content %}
 
                 {% endblock %}
@@ -166,9 +245,13 @@
     </div>
 
 
-    <!-- JavaScript -->
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- JavaScript -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    {% block extra_js %}{% endblock %}
 
 </body>
 

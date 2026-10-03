@@ -1,0 +1,631 @@
+/* ===================================================
+   TravelWise - Dashboard Stylesheet (dashboard.css)
+   Matches the core TravelWise modern travel aesthetic
+   =================================================== */
+
+/* Container */
+.dashboard-container {
+    padding: 8px 4px 30px 4px;
+}
+
+/* ================= HERO GREETING BANNER ================= */
+.dashboard-hero {
+    background: linear-gradient(135deg, #15243a 0%, #1e3a63 55%, #1769e8 100%);
+    border-radius: 16px;
+    padding: 32px 36px;
+    color: #ffffff;
+    box-shadow: 0 10px 30px rgba(21, 36, 58, 0.12);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.dashboard-hero::after {
+    content: "✈";
+    position: absolute;
+    right: 25px;
+    bottom: -20px;
+    font-size: 140px;
+    color: rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+    line-height: 1;
+}
+
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+}
+
+.dashboard-hero h1 {
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.dashboard-hero p {
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    margin-bottom: 0;
+    max-width: 560px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.btn-hero-primary {
+    background: #ffffff;
+    color: #1769e8;
+    font-weight: 600;
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-hero-primary:hover {
+    background: #f1f5f9;
+    color: #1254be;
+    transform: translateY(-1px);
+}
+
+.btn-hero-outline {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-weight: 500;
+    padding: 9px 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-hero-outline:hover {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ================= STAT METRIC CARDS ================= */
+.stat-card {
+    background: #ffffff;
+    border: 1px solid #e7ecf3;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 3px 12px rgba(22, 35, 58, 0.03);
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(22, 35, 58, 0.08);
+    border-color: #cbd5e1;
+}
+
+.stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.icon-blue {
+    background: #eaf2ff;
+    color: #1769e8;
+}
+
+.icon-green {
+    background: #ecfdf3;
+    color: #16a34a;
+}
+
+.icon-purple {
+    background: #f4effe;
+    color: #7c3aed;
+}
+
+.icon-amber {
+    background: #fef7ec;
+    color: #d97706;
+}
+
+.stat-info {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.stat-value {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #15243a;
+    line-height: 1.2;
+    margin-bottom: 2px;
+}
+
+.stat-title {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.stat-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 7px;
+    border-radius: 10px;
+}
+
+.badge-trend-up {
+    background: #ecfdf3;
+    color: #15803d;
+}
+
+.badge-trend-neutral {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+/* ================= DASHBOARD MAIN CARDS ================= */
+.dashboard-card {
+    background: #ffffff;
+    border: 1px solid #e7ecf3;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 3px 12px rgba(22, 35, 58, 0.03);
+    margin-bottom: 24px;
+}
+
+.card-title-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.card-title-flex h5 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #15243a;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-action-link {
+    font-size: 0.85rem;
+    color: #1769e8;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.card-action-link:hover {
+    color: #1254be;
+    text-decoration: underline;
+}
+
+/* ================= RECENT TRIPS CARDS ================= */
+.trip-item-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    transition: all 0.2s ease;
+}
+
+.trip-item-card:hover {
+    border-color: #3b82f6;
+    background: #fafcff;
+    box-shadow: 0 4px 14px rgba(23, 105, 232, 0.06);
+}
+
+.trip-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.trip-route {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #15243a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.trip-arrow {
+    color: #1769e8;
+    font-size: 1.1rem;
+}
+
+.trip-status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-planned {
+    background: #ecfdf3;
+    color: #15803d;
+}
+
+.status-draft {
+    background: #fef7ec;
+    color: #b45309;
+}
+
+.status-completed {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.trip-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.83rem;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.trip-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.trip-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px dashed #e2e8f0;
+}
+
+.trip-cost-tag {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #15243a;
+}
+
+.trip-cost-tag small {
+    font-weight: normal;
+    color: #64748b;
+    font-size: 0.75rem;
+}
+
+/* Empty State */
+.empty-trips-box {
+    text-align: center;
+    padding: 36px 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px dashed #cbd5e1;
+}
+
+.empty-trips-box .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.empty-trips-box h6 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #15243a;
+    margin-bottom: 6px;
+}
+
+.empty-trips-box p {
+    font-size: 0.875rem;
+    color: #64748b;
+    max-width: 360px;
+    margin: 0 auto 16px auto;
+}
+
+/* ================= BUDGET OVERVIEW (DONUT) ================= */
+.budget-donut-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0 16px 0;
+}
+
+.dashboard-donut {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #1769e8 0 35%, 
+        #7c3aed 35% 62%, 
+        #16a34a 62% 82%, 
+        #d97706 82% 94%, 
+        #ec4899 94%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-donut::before {
+    content: "";
+    position: absolute;
+    width: 94px;
+    height: 94px;
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+.donut-inner-content {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+}
+
+.donut-amount {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #15243a;
+    line-height: 1.1;
+}
+
+.donut-label {
+    font-size: 0.7rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Category Legend */
+.budget-legend-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-top: 14px;
+}
+
+.legend-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.legend-label-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #334155;
+    font-weight: 500;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-transport { background: #1769e8; }
+.dot-hotel { background: #7c3aed; }
+.dot-food { background: #16a34a; }
+.dot-activity { background: #d97706; }
+.dot-other { background: #ec4899; }
+
+.legend-values {
+    font-weight: 600;
+    color: #15243a;
+}
+
+.legend-values small {
+    color: #64748b;
+    font-weight: normal;
+}
+
+/* ================= QUICK ACTIONS TILES ================= */
+.quick-action-tile {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+    color: inherit;
+}
+
+.quick-action-tile:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(23, 105, 232, 0.08);
+}
+
+.action-tile-icon {
+    font-size: 1.5rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.action-tile-text h6 {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #15243a;
+}
+
+.action-tile-text p {
+    margin: 0;
+    font-size: 0.78rem;
+    color: #64748b;
+}
+
+/* ================= AI TRAVEL WIDGET ================= */
+.ai-advisor-box {
+    background: linear-gradient(135deg, #f8f6ff 0%, #edf2fe 100%);
+    border: 1px solid #ddd6fe;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 14px;
+}
+
+.ai-advisor-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #6d28d9;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+.ai-advisor-box p {
+    font-size: 0.83rem;
+    color: #475569;
+    margin: 0;
+    line-height: 1.45;
+}
+
+/* ================= DESTINATION DISCOVERY CARDS ================= */
+.dest-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.25s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dest-card:hover {
+    border-color: #3b82f6;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.dest-badge-header {
+    height: 80px;
+    background: linear-gradient(135deg, #e0e7ff 0%, #f1f5f9 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    position: relative;
+}
+
+.dest-tag {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    color: #1e40af;
+}
+
+.dest-body {
+    padding: 14px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dest-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #15243a;
+    margin-bottom: 2px;
+}
+
+.dest-desc {
+    font-size: 0.78rem;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.dest-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.dest-price {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #15803d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .dashboard-hero {
+        padding: 24px 20px;
+    }
+    .dashboard-hero h1 {
+        font-size: 1.45rem;
+    }
+    .dashboard-hero::after {
+        display: none;
+    }
+    .hero-actions {
+        margin-top: 14px;
+    }
+}

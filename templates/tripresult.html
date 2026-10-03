@@ -258,12 +258,16 @@
             <!-- Buttons -->
             <div class="buttons">
 
-                <a href="/itinerary" class="btn btn-primary">
+                <a href="{{ url_for('itinerary') }}" class="btn btn-primary">
                     View Itinerary
                 </a>
 
-                <a href="/budget" class="btn btn-outline">
+                <a href="{{ url_for('budget') }}" class="btn btn-outline">
                     View Budget
+                </a>
+
+                <a href="{{ url_for('dashboard') }}" class="btn btn-outline">
+                    Dashboard
                 </a>
 
             </div>
