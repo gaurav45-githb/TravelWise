@@ -15,103 +15,131 @@ Main home page
     <div class="col-xl-7">
         <div class="card shadow-sm border-0">
             <div class="card-body p-4">
+                <form method="POST" action="{{ url_for('main') }}" id="tripForm">
 
-                <div class="d-flex gap-3 border-bottom pb-3 mb-3">
-                    <div class="fs-1 text-primary">✈</div>
-                    <div>
-                        <h1 class="h4 mb-1">Plan Your Trip</h1>
-                        <p class="text-secondary small mb-0">Tell us your preferences and we'll plan the perfect trip
-                            for
-                            you.</p>
-                    </div>
-                </div>
-
-                <div class="row g-3 align-items-end">
-                    <div class="col-md-5">
-                        <label class="form-label small fw-bold">From (Start)</label>
-                        <select class="form-select">
-                            <option>Delhi (DEL)</option>
-                            <option>Pune (PNQ)</option>
-                            <option>Mumbai (BOM)</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2 text-center"><button class="btn btn-light border">⇄</button></div>
-                    <div class="col-md-5">
-                        <label class="form-label small fw-bold">To (Destination)</label>
-                        <select class="form-select" id="destination">
-                            <option>Goa (GOI)</option>
-                            <option>Patna (PAT)</option>
-                            <option>Jaipur (JAI)</option>
-                            <option>Manali</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row g-3 mt-1">
-                    <div class="col-md-3"><label class="form-label small fw-bold">Departure</label><input type="date"
-                            class="form-control" value="2026-10-10"></div>
-                    <div class="col-md-3"><label class="form-label small fw-bold">Return</label><input type="date"
-                            class="form-control" value="2026-10-15"></div>
-                    <div class="col-md-3">
-                        <label class="form-label small fw-bold">Travelers</label>
-                        <div class="input-group">
-                            <button class="btn btn-outline-secondary" onclick="changePeople(-1)">−</button>
-                            <input id="people" class="form-control text-center" value="4" readonly>
-                            <button class="btn btn-outline-secondary" onclick="changePeople(1)">+</button>
+                    <div class="d-flex gap-3 border-bottom pb-3 mb-3">
+                        <div class="fs-1 text-primary">✈</div>
+                        <div>
+                            <h1 class="h4 mb-1">Plan Your Trip</h1>
+                            <p class="text-secondary small mb-0">Tell us your preferences and we'll plan the perfect
+                                trip
+                                for
+                                you.</p>
                         </div>
                     </div>
-                    <div class="col-md-3"><label class="form-label small fw-bold">Budget</label>
-                        <div class="input-group"><span class="input-group-text">₹</span><input id="budget" type="number"
-                                class="form-control" value="20000"></div>
-                    </div>
-                </div>
 
-                <hr>
-                <h6>Preferred Transportation <small class="text-secondary fw-normal">(Select one or more)</small></h6>
-                <div class="row g-2">
-                    <div class="col-6 col-md-3"><button class="choice selected w-100" onclick="toggleChoice(this)">🚆
-                            Train</button></div>
-                    <div class="col-6 col-md-3"><button class="choice selected w-100" onclick="toggleChoice(this)">🚌
-                            Bus</button></div>
-                    <div class="col-6 col-md-3"><button class="choice w-100" onclick="toggleChoice(this)">✈️
-                            Flight</button></div>
-                    <div class="col-6 col-md-3"><button class="choice w-100" onclick="toggleChoice(this)">🚗
-                            Car</button>
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-5">
+                            <label class="form-label small fw-bold">From (Start)</label>
+                            <select class="form-select" name="source" id="source" required>
+                                <option value="Delhi">Delhi (DEL)</option>
+                                <option value="Pune">Pune (PNQ)</option>
+                                <option value="Mumbai">Mumbai (BOM)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-center"><button class="btn btn-light border">⇄</button></div>
+                        <div class="col-md-5">
+                            <label class="form-label small fw-bold">To (Destination)</label>
+                            <select class="form-select" id="destination" name="destination" required>
+                                <option value="Goa">Goa (GOI)</option>
+                                <option value="Patna">Patna (PAT)</option>
+                                <option value="Jaipur">Jaipur (JAI)</option>
+                                <option value="Manali">Manali</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <hr>
-                <h6>What interests you? <small class="text-secondary fw-normal">(Select all that apply)</small></h6>
-                <div class="row g-2">
-                    <div class="col-6 col-md-2"><button class="choice selected w-100" onclick="toggleChoice(this)">🏖️
-                            Beach</button></div>
-                    <div class="col-6 col-md-2"><button class="choice selected w-100" onclick="toggleChoice(this)">🌲
-                            Nature</button></div>
-                    <div class="col-6 col-md-2"><button class="choice w-100" onclick="toggleChoice(this)">🏛️
-                            History</button></div>
-                    <div class="col-6 col-md-2"><button class="choice w-100" onclick="toggleChoice(this)">🧗
-                            Adventure</button></div>
-                    <div class="col-6 col-md-2"><button class="choice selected w-100" onclick="toggleChoice(this)">🍴
-                            Food</button></div>
-                    <div class="col-6 col-md-2"><button class="choice w-100" onclick="toggleChoice(this)">🛍️
-                            Shopping</button></div>
-                </div>
-
-                <hr>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h6>Accommodation</h6>
-                        <button class="choice">💼 Budget</button><button class="choice selected">🏨
-                            Standard</button><button class="choice">👑 Luxury</button>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-3"><label class="form-label small fw-bold">Departure</label><input
+                                type="date" class="form-control" name="start_date" id="start_date" value="2026-10-10"
+                                required></div>
+                        <div class="col-md-3"><label class="form-label small fw-bold">Return</label><input type="date"
+                                class="form-control" name="end_date" id="end_date" value="2026-10-15" required></div>
+                        <div class="col-md-3">
+                            <label class="form-label small fw-bold">Travelers</label>
+                            <div class="input-group">
+                                <button class="btn btn-outline-secondary" onclick="changePeople(-1)">−</button>
+                                <input id="people" name="travelers" class="form-control text-center" value="4" readonly>
+                                <button class="btn btn-outline-secondary" onclick="changePeople(1)">+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3"><label class="form-label small fw-bold">Budget</label>
+                            <div class="input-group"><span class="input-group-text">₹</span><input id="budget"
+                                    name="budget" type="number" class="form-control" value="20000" min="1000" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <h6>Trip Type</h6>
-                        <button class="choice selected">🌴 Leisure</button><button class="choice">👨‍👩‍👧
-                            Family</button><button class="choice">🎒 Adventure</button>
-                    </div>
-                </div>
 
-                <button class="btn btn-primary w-100 mt-4 py-2 fw-bold" onclick="planTrip()">✦ Plan My Trip</button>
+                    <hr>
+                    <h6>Preferred Transportation <small class="text-secondary fw-normal">(Select one or more)</small>
+                    </h6>
+                    <div class="row g-2">
+                        <div class="col-6 col-md-3"><button type="button" class="choice selected w-100"
+                                data-group="transport" data-value="Train" onclick="toggleChoice(this)">🚆
+                                Train</button></div>
+                        <div class="col-6 col-md-3"><button type="button" class="choice selected w-100"
+                                data-group="transport" data-value="Bus" onclick="toggleChoice(this)">🚌
+                                Bus</button></div>
+                        <div class="col-6 col-md-3"><button type="button" class="choice w-100" data-group="transport"
+                                data-value="Flight" onclick="toggleChoice(this)">✈️
+                                Flight</button></div>
+                        <div class="col-6 col-md-3"><button type="button" class="choice w-100" data-group="transport"
+                                data-value="Car" onclick="toggleChoice(this)">🚗
+                                Car</button>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <h6>What interests you? <small class="text-secondary fw-normal">(Select all that apply)</small></h6>
+                    <div class="row g-2">
+                        <div class="col-6 col-md-2"><button type="button" class="choice selected w-100"
+                                data-group="interest" data-value="Beach" onclick="toggleChoice(this)">🏖️
+                                Beach</button></div>
+                        <div class="col-6 col-md-2"><button type="button" class="choice selected w-100"
+                                data-group="interest" data-value="Nature" onclick="toggleChoice(this)">🌲
+                                Nature</button></div>
+                        <div class="col-6 col-md-2"><button type="button" class="choice w-100" data-group="interest"
+                                data-value="History" onclick="toggleChoice(this)">🏛️
+                                History</button></div>
+                        <div class="col-6 col-md-2"><button type="button" class="choice w-100" data-group="interest"
+                                data-value="Adventure" onclick="toggleChoice(this)">🧗
+                                Adventure</button></div>
+                        <div class="col-6 col-md-2"><button type="button" class="choice selected w-100"
+                                data-group="interest" data-value="Food" onclick="toggleChoice(this)">🍴
+                                Food</button></div>
+                        <div class="col-6 col-md-2"><button type="button" class="choice w-100" data-group="interest"
+                                data-value="Shopping" onclick="toggleChoice(this)">🛍️
+                                Shopping</button></div>
+                    </div>
+
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Accommodation</h6>
+                            <button type="button" class="choice" data-single="accommodation" data-value="Budget"
+                                onclick="selectSingle(this)">💼 Budget</button><button type="button"
+                                class="choice selected" data-single="accommodation" data-value="Standard"
+                                onclick="selectSingle(this)">🏨
+                                Standard</button><button type="button" class="choice" data-single="accommodation"
+                                data-value="Luxury" onclick="selectSingle(this)">👑 Luxury</button>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Trip Type</h6>
+                            <button type="button" class="choice selected" data-single="trip_type" data-value="Leisure"
+                                onclick="selectSingle(this)">🌴 Leisure</button><button type="button" class="choice"
+                                data-single="trip_type" data-value="Family" onclick="selectSingle(this)">👨‍👩‍👧
+                                Family</button><button type="button" class="choice" data-single="trip_type"
+                                data-value="Adventure" onclick="selectSingle(this)">🎒 Adventure</button>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="transport_preference" id="transport_preference" value="Train, Bus">
+                    <input type="hidden" name="interests" id="interests" value="Beach, Nature, Food">
+                    <input type="hidden" name="accommodation_type" id="accommodation_type" value="Standard">
+                    <input type="hidden" name="trip_type" id="trip_type" value="Leisure">
+
+                    <button type="submit" class="btn btn-primary w-100 mt-4 py-2 fw-bold">✦ Plan My Trip</button>
+                </form>
             </div>
         </div>
 
@@ -179,7 +207,8 @@ Main home page
         <div class="card shadow-sm border-0 mb-3">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
-                    <h6>5 Days Itinerary Preview</h6><a href="{{url_for('itinerary')}}" class="small">View Full Itinerary →</a>
+                    <h6>5 Days Itinerary Preview</h6><a href="{{url_for('itinerary')}}" class="small">View Full
+                        Itinerary →</a>
                 </div>
                 <ul class="nav nav-tabs mt-2">
                     <li class="nav-item"><button class="nav-link active">Day 1</button></li>
@@ -219,10 +248,6 @@ Main home page
 </div>
 
 
-<a href="{{url_for('budget')}}">
-<button>Click me</button></a>
-<a href="{{url_for('tripresult')}}">
-<button>Click me</button></a>
 
 {% endblock %}
 

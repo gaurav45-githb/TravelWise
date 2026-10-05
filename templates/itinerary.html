@@ -1,395 +1,47 @@
 {% extends "base.html" %}
-{% block title %}Itinerary page {% endblock %}
-
+{% block title %}Itinerary - TravelWise{% endblock %}
 {% block extra_css %}
-<link rel="stylesheet" href="{{url_for('static', filename='css/itinerary.css')}}">
-{% endblock %}
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/itinerary.css') }}">{% endblock %}
 {% block content %}
-<!-- Main -->
 <main class="container">
-
+    {% if trip and itinerary %}
     <div class="heading">
-        <h1>5 Days Itinerary</h1>
+        <h1>{{ itinerary.total_days }} Days Itinerary</h1>
         <p>Your day-by-day personalized travel plan.</p>
     </div>
-
-
-    <!-- Trip Info -->
     <div class="trip-info">
-
-        <h2>Mumbai → Goa</h2>
-
-        <div class="trip-details">
-            <span>📅 5 Days</span>
-            <span>👥 3 Travelers</span>
-            <span>💰 ₹25,000 Estimated</span>
-        </div>
-
+        <h2>{{ trip.source }} → {{ trip.destination }}</h2>
+        <div class="trip-details"><span>📅 {{ duration_days }} Days</span><span>👥 {{ trip.travelers }}
+                Travelers</span><span>💰 ₹{{ '{:,.0f}'.format(itinerary.estimated_cost) if itinerary.estimated_cost else
+                '—' }} Estimated</span></div>
     </div>
-
-
-    <!-- Day 1 -->
-    <div class="day-card">
-
+    {% for day in range(1, duration_days + 1) %}<div class="day-card">
         <div class="day-header">
-            <h2>Day 1 - Arrival in Goa</h2>
-            <span class="day-date">Monday</span>
-        </div>
-
-
-        <div class="activity">
-
-            <div class="time">
-                08:00 AM
+            <h2>Day {{ day }}</h2><span class="day-date">{{ (trip.start_date + timedelta(days=day-1)).strftime('%A, %d
+                %b') }}</span>
+        </div>{% if activities_by_day.get(day) %}{% for activity in activities_by_day[day] %}<div class="activity">
+            <div class="time">{{ activity.start_time.strftime('%I:%M %p') if activity.start_time else 'Flexible' }}
             </div>
-
-            <div class="activity-icon">
-                🚆
-            </div>
-
+            <div class="activity-icon">📍</div>
             <div class="activity-content">
-                <h3>Travel to Goa</h3>
-                <p>
-                    Start your journey from Mumbai to Goa by train.
-                </p>
+                <h3>{{ activity.activity_name }}</h3>
+                <p>{{ activity.description or activity.place_name }}</p>
             </div>
-
-            <div class="cost">
-                ₹1,000
-            </div>
-
-        </div>
-
-
-        <div class="activity">
-
-            <div class="time">
-                06:00 PM
-            </div>
-
-            <div class="activity-icon">
-                🏨
-            </div>
-
+            <div class="cost">₹{{ '{:,.0f}'.format(activity.estimated_cost or 0) }}</div>
+        </div>{% endfor %}{% else %}<div class="activity">
             <div class="activity-content">
-                <h3>Hotel Check-in</h3>
-                <p>
-                    Check in to your selected standard hotel and relax.
-                </p>
+                <h3>Free time / exploration</h3>
+                <p>No activities have been added for this day.</p>
             </div>
-
-            <div class="cost">
-                ₹2,000
-            </div>
-
-        </div>
-
-
-        <div class="activity">
-
-            <div class="time">
-                07:30 PM
-            </div>
-
-            <div class="activity-icon">
-                🏖️
-            </div>
-
-            <div class="activity-content">
-                <h3>Baga Beach</h3>
-                <p>
-                    Enjoy the sunset and explore the beach area.
-                </p>
-            </div>
-
-            <div class="cost">
-                ₹500
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Day 2 -->
-    <div class="day-card">
-
-        <div class="day-header">
-            <h2>Day 2 - North Goa</h2>
-            <span class="day-date">Tuesday</span>
-        </div>
-
-
-        <div class="activity">
-
-            <div class="time">
-                09:00 AM
-            </div>
-
-            <div class="activity-icon">
-                🏰
-            </div>
-
-            <div class="activity-content">
-                <h3>Fort Aguada</h3>
-                <p>
-                    Visit the historic Portuguese fort and enjoy the
-                    surrounding views.
-                </p>
-            </div>
-
-            <div class="cost">
-                ₹300
-            </div>
-
-        </div>
-
-
-        <div class="activity">
-
-            <div class="time">
-                01:00 PM
-            </div>
-
-            <div class="activity-icon">
-                🍴
-            </div>
-
-            <div class="activity-content">
-                <h3>Goan Lunch</h3>
-                <p>
-                    Try traditional Goan food at a local restaurant.
-                </p>
-            </div>
-
-            <div class="cost">
-                ₹600
-            </div>
-
-        </div>
-
-
-        <div class="activity">
-
-            <div class="time">
-                04:00 PM
-            </div>
-
-            <div class="activity-icon">
-                🌊
-            </div>
-
-            <div class="activity-content">
-                <h3>Calangute Beach</h3>
-                <p>
-                    Spend the evening at one of Goa's popular beaches.
-                </p>
-            </div>
-
-            <div class="cost">
-                ₹500
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Day 3 -->
-    <div class="day-card">
-
-        <div class="day-header">
-            <h2>Day 3 - Adventure Day</h2>
-            <span class="day-date">Wednesday</span>
-        </div>
-
-
-        <div class="activity">
-
-            <div class="time">
-                10:00 AM
-            </div>
-
-            <div class="activity-icon">
-                🏄
-            </div>
-
-            <div class="activity-content">
-                <h3>Water Sports</h3>
-                <p>
-                    Enjoy activities such as parasailing and jet skiing.
-                </p>
-            </div>
-
-            <div class="cost">
-                ₹2,000
-            </div>
-
-        </div>
-
-
-        <div class="activity">
-
-            <div class="time">
-                06:00 PM
-            </div>
-
-            <div class="activity-icon">
-                🛍️
-            </div>
-
-            <div class="activity-content">
-                <h3>Local Shopping</h3>
-                <p>
-                    Explore local markets and buy souvenirs.
-                </p>
-            </div>
-
-            <div class="cost">
-                ₹1,000
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Day 4 -->
-    <div class="day-card">
-
-        <div class="day-header">
-            <h2>Day 4 - South Goa</h2>
-            <span class="day-date">Thursday</span>
-        </div>
-
-
-        <div class="activity">
-
-            <div class="time">
-                09:00 AM
-            </div>
-
-            <div class="activity-icon">
-                ⛪
-            </div>
-
-            <div class="activity-content">
-                <h3>Visit Old Goa</h3>
-                <p>
-                    Explore historical churches and heritage locations.
-                </p>
-            </div>
-
-            <div class="cost">
-                ₹300
-            </div>
-
-        </div>
-
-
-        <div class="activity">
-
-            <div class="time">
-                05:00 PM
-            </div>
-
-            <div class="activity-icon">
-                🌅
-            </div>
-
-            <div class="activity-content">
-                <h3>Palolem Beach</h3>
-                <p>
-                    Relax at the beach and enjoy the evening sunset.
-                </p>
-            </div>
-
-            <div class="cost">
-                ₹500
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Day 5 -->
-    <div class="day-card">
-
-        <div class="day-header">
-            <h2>Day 5 - Return</h2>
-            <span class="day-date">Friday</span>
-        </div>
-
-
-        <div class="activity">
-
-            <div class="time">
-                09:00 AM
-            </div>
-
-            <div class="activity-icon">
-                ☕
-            </div>
-
-            <div class="activity-content">
-                <h3>Breakfast & Checkout</h3>
-                <p>
-                    Have breakfast, pack your belongings and check out.
-                </p>
-            </div>
-
-            <div class="cost">
-                ₹400
-            </div>
-
-        </div>
-
-
-        <div class="activity">
-
-            <div class="time">
-                11:00 AM
-            </div>
-
-            <div class="activity-icon">
-                🚆
-            </div>
-
-            <div class="activity-content">
-                <h3>Return to Mumbai</h3>
-                <p>
-                    Start your return journey from Goa to Mumbai.
-                </p>
-            </div>
-
-            <div class="cost">
-                ₹1,000
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Buttons -->
-    <div class="buttons">
-
-        <a href="/trip-result" class="btn outline">
-            ← Back to Trip
-        </a>
-
-        <a href="/budget" class="btn primary">
-            View Complete Budget →
-        </a>
-
-    </div>
-
+        </div>{% endif %}
+    </div>{% endfor %}
+    <div class="buttons"><a href="{{ url_for('trip_details', trip_id=trip.trip_id) }}" class="btn outline">← Back to
+            Trip</a><a href="{{ url_for('trip_budget', trip_id=trip.trip_id) }}" class="btn primary">View Complete
+            Budget →</a></div>
+    {% else %}<div class="heading">
+        <h1>No Itinerary Available</h1>
+        <p>Plan a trip first to generate your itinerary.</p><a href="{{ url_for('main') }}" class="btn primary">Plan a
+            Trip</a>
+    </div>{% endif %}
 </main>
-{% endblock %}
-
-{% block extra_js %}
-<script>console.log("TravelWise Itinerary Loaded");</script>
-
 {% endblock %}
