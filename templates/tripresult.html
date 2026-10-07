@@ -1,34 +1,312 @@
 {% extends "base.html" %}
 {% block title %}Trip Plan - TravelWise{% endblock %}
-{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/tripresult.css') }}">{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tripresult.css') }}">{% endblock %}
 {% block content %}
 <main class="container">
     {% if trip %}
-    <div class="page-title"><h1>Your Trip Plan</h1><p>Here is your personalized travel plan.</p></div>
+    <div class="page-title">
+        <h1>Your Trip Plan</h1>
+        <p>Here is your personalized travel plan.</p>
+    </div>
 
     <div class="trip-header">
         <div class="trip-route"><span>{{ trip.source }}</span><span>→</span><span>{{ trip.destination }}</span></div>
-        <div class="trip-info"><span>📅 {{ duration_days }} Days</span><span>👥 {{ trip.travelers }} Travelers</span><span>🚆 {{ transport.transport_type if transport else 'Not selected' }}</span></div>
+        <div class="trip-info"><span>📅 {{ duration_days }} Days</span><span>👥 {{ trip.travelers }}
+                Travelers</span><span>🚆 {{ transport.transport_type if transport else 'Not selected' }}</span></div>
     </div>
 
     <div class="grid">
         <div>
-            <div class="card"><h2>🚆 Transportation</h2><div class="option"><div class="option-left"><div class="icon">🚆</div><div><div class="option-name">{{ transport.transport_type if transport else 'Transportation' }}</div><div class="option-detail">{{ transport.route_details if transport else trip.source ~ ' → ' ~ trip.destination }}</div></div></div><div class="price">₹{{ '{:,.0f}'.format(transport.estimated_cost) if transport else '—' }}</div></div></div>
-            <div class="card"><h2>🏨 Accommodation</h2><div class="option"><div class="option-left"><div class="icon">🏨</div><div><div class="option-name">{{ accommodation.hotel_name if accommodation else 'Accommodation' }}</div><div class="option-detail">{{ accommodation.total_nights if accommodation else nights }} Nights • {{ accommodation.location if accommodation else 'Destination' }}</div></div></div><div class="price">₹{{ '{:,.0f}'.format(accommodation.estimated_total) if accommodation else '—' }}</div></div></div>
-            <div class="card"><h2>🍴 Food</h2><div class="option"><div class="option-left"><div class="icon">🍴</div><div><div class="option-name">{{ pref.food_preference if pref else 'Local Food' }}</div><div class="option-detail">Estimated food cost</div></div></div><div class="price">₹{{ '{:,.0f}'.format(budget.max_food_cost) if budget else '—' }}</div></div></div>
-            <div class="card"><h2>🎯 Activities</h2><div class="option"><div class="option-left"><div class="icon">🎯</div><div><div class="option-name">{{ pref.trip_type if pref else 'Sightseeing' }}</div><div class="option-detail">Personalized activities for {{ trip.destination }}</div></div></div><div class="price">₹{{ '{:,.0f}'.format(budget.max_activity_cost) if budget else '—' }}</div></div></div>
+            <div class="card">
+                <h2>🚆 Transportation</h2>
+                <div class="option">
+                    <div class="option-left">
+                        <div class="icon">🚆</div>
+                        <div>
+                            <div class="option-name">{{ transport.transport_type if transport else 'Transportation' }}
+                            </div>
+                            <div class="option-detail">{{ transport.route_details if transport else trip.source ~ ' → '
+                                ~ trip.destination }}</div>
+                        </div>
+                    </div>
+                    <div class="price">₹{{ '{:,.0f}'.format(transport.estimated_cost) if transport else '—' }}</div>
+                </div>
+            </div>
+            <div class="card">
+                <h2>🏨 Accommodation</h2>
+                <div class="option">
+                    <div class="option-left">
+                        <div class="icon">🏨</div>
+                        <div>
+                            <div class="option-name">{{ accommodation.hotel_name if accommodation else 'Accommodation'
+                                }}</div>
+                            <div class="option-detail">{{ accommodation.total_nights if accommodation else nights }}
+                                Nights • {{ accommodation.location if accommodation else 'Destination' }}</div>
+                        </div>
+                    </div>
+                    <div class="price">₹{{ '{:,.0f}'.format(accommodation.estimated_total) if accommodation else '—' }}
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h2>🍴 Food</h2>
+                <div class="option">
+                    <div class="option-left">
+                        <div class="icon">🍴</div>
+                        <div>
+                            <div class="option-name">{{ pref.food_preference if pref else 'Local Food' }}</div>
+                            <div class="option-detail">Estimated food cost</div>
+                        </div>
+                    </div>
+                    <div class="price">₹{{ '{:,.0f}'.format(budget.max_food_cost) if budget else '—' }}</div>
+                </div>
+            </div>
+            <div class="card">
+                <h2>🎯 Activities</h2>
+                <div class="option">
+                    <div class="option-left">
+                        <div class="icon">🎯</div>
+                        <div>
+                            <div class="option-name">{{ pref.trip_type if pref else 'Sightseeing' }}</div>
+                            <div class="option-detail">Personalized activities for {{ trip.destination }}</div>
+                        </div>
+                    </div>
+                    <div class="price">₹{{ '{:,.0f}'.format(budget.max_activity_cost) if budget else '—' }}</div>
+                </div>
+            </div>
         </div>
 
         <div>
-            <div class="budget-card"><div class="budget-title">💰 Trip Budget</div>
-                {% if budget %}<div class="budget-item"><span>Transportation</span><b>₹{{ '{:,.0f}'.format(budget.max_transport_cost) }}</b></div><div class="budget-item"><span>Accommodation</span><b>₹{{ '{:,.0f}'.format(budget.max_stay_cost) }}</b></div><div class="budget-item"><span>Food</span><b>₹{{ '{:,.0f}'.format(budget.max_food_cost) }}</b></div><div class="budget-item"><span>Activities</span><b>₹{{ '{:,.0f}'.format(budget.max_activity_cost) }}</b></div><div class="budget-total"><span>Total</span><span>₹{{ '{:,.0f}'.format(budget.total_max_budget) }}</span></div>{% else %}<p>No budget generated yet.</p>{% endif %}
+            <div class="budget-card">
+                <div class="budget-title">💰 Trip Budget</div>
+                {% if budget %}<div class="budget-item"><span>Transportation</span><b>₹{{
+                        '{:,.0f}'.format(budget.max_transport_cost) }}</b></div>
+                <div class="budget-item"><span>Accommodation</span><b>₹{{ '{:,.0f}'.format(budget.max_stay_cost) }}</b>
+                </div>
+                <div class="budget-item"><span>Food</span><b>₹{{ '{:,.0f}'.format(budget.max_food_cost) }}</b></div>
+                <div class="budget-item"><span>Activities</span><b>₹{{ '{:,.0f}'.format(budget.max_activity_cost) }}</b>
+                </div>
+                <div class="budget-total"><span>Total</span><span>₹{{ '{:,.0f}'.format(budget.total_max_budget)
+                        }}</span></div>{% else %}<p>No budget generated yet.</p>{% endif %}
             </div>
-            {% if budget %}<div class="card"><h2>Budget Range</h2><div class="budget-range"><div class="range-item"><span>Minimum</span><b>₹{{ '{:,.0f}'.format(budget.total_min_budget) }}</b></div><div class="range-item"><span>Recommended</span><b>₹{{ '{:,.0f}'.format((budget.total_min_budget + budget.total_max_budget) / 2) }}</b></div><div class="range-item"><span>Maximum</span><b>₹{{ '{:,.0f}'.format(budget.total_max_budget) }}</b></div></div></div>{% endif %}
-            <div class="buttons"><a href="{{ url_for('trip_itinerary', trip_id=trip.trip_id) }}" class="btn btn-primary">View Itinerary</a><a href="{{ url_for('trip_budget', trip_id=trip.trip_id) }}" class="btn btn-outline">View Budget</a><a href="{{ url_for('edit_trip', trip_id=trip.trip_id) }}" class="btn btn-outline">Edit Trip</a></div>
+            {% if budget %}<div class="card">
+                <h2>Budget Range</h2>
+                <div class="budget-range">
+                    <div class="range-item"><span>Minimum</span><b>₹{{ '{:,.0f}'.format(budget.total_min_budget) }}</b>
+                    </div>
+                    <div class="range-item"><span>Recommended</span><b>₹{{ '{:,.0f}'.format((budget.total_min_budget +
+                            budget.total_max_budget) / 2) }}</b></div>
+                    <div class="range-item"><span>Maximum</span><b>₹{{ '{:,.0f}'.format(budget.total_max_budget) }}</b>
+                    </div>
+                </div>
+            </div>{% endif %}
+            <div class="buttons"><a href="{{ url_for('trip_itinerary', trip_id=trip.trip_id) }}"
+                    class="btn btn-primary">View Itinerary</a><a
+                    href="{{ url_for('trip_budget', trip_id=trip.trip_id) }}" class="btn btn-outline">View Budget</a><a
+                    href="{{ url_for('edit_trip', trip_id=trip.trip_id) }}" class="btn btn-outline">Edit Trip</a></div>
         </div>
     </div>
     {% else %}
-    <div class="page-title"><h1>No Trip Found</h1><p>Plan a trip to see your personalized result.</p><a href="{{ url_for('main') }}" class="btn btn-primary">Plan a Trip</a></div>
+    <div class="page-title">
+        <h1>No Trip Found</h1>
+        <p>Plan a trip to see your personalized result.</p><a href="{{ url_for('main') }}" class="btn btn-primary">Plan
+            a Trip</a>
+    </div>
     {% endif %}
+
+    <!-- ============================= -->
+    <!-- DYNAMIC TRAVEL MAP -->
+    <!-- ============================= -->
+
+    <div class="card map-card">
+
+        <div class="map-header">
+            <div>
+                <h2>🗺️ Travel Route</h2>
+                <p>
+                    {{ trip.source }} → {{ trip.destination }}
+                </p>
+            </div>
+        </div>
+
+        <div id="travelMap"></div>
+
+        <div id="mapStatus" class="map-status">
+            Loading route...
+        </div>
+
+    </div>
 </main>
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+
+
+    const tripSource = {{ trip.source | tojson }};
+    const tripDestination = {{ trip.destination | tojson }};
+
+    async function getCoordinates(place) {
+
+        const url =
+            "https://nominatim.openstreetmap.org/search" +
+            "?format=json" +
+            "&limit=1" +
+            "&q=" +
+            encodeURIComponent(place);
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("Location service unavailable");
+        }
+
+        const data = await response.json();
+
+        if (!data.length) {
+            throw new Error("Location not found: " + place);
+        }
+
+        return {
+            lat: Number(data[0].lat),
+            lon: Number(data[0].lon)
+        };
+    }
+
+
+    async function loadTravelMap() {
+
+        const status = document.getElementById("mapStatus");
+
+        try {
+
+            const source = await getCoordinates(tripSource);
+
+            const destination =
+                await getCoordinates(tripDestination);
+
+
+            // Create map
+            const map = L.map("travelMap");
+
+
+            // OpenStreetMap tiles
+            L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+                    attribution:
+                        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }
+            ).addTo(map);
+
+
+            // Source marker
+            const sourceMarker = L.marker([
+                source.lat,
+                source.lon
+            ]).addTo(map);
+
+            sourceMarker.bindPopup(
+                `<b>📍 Source</b><br>${tripSource}`
+            );
+
+
+            // Destination marker
+            const destinationMarker = L.marker([
+                destination.lat,
+                destination.lon
+            ]).addTo(map);
+
+            destinationMarker.bindPopup(
+                `<b>📍 Destination</b><br>${tripDestination}`
+            );
+
+
+            // OSRM route
+            const routeURL =
+                "https://router.project-osrm.org/route/v1/driving/" +
+                `${source.lon},${source.lat};` +
+                `${destination.lon},${destination.lat}` +
+                "?overview=full&geometries=geojson";
+
+
+            const routeResponse =
+                await fetch(routeURL);
+
+
+            const routeData =
+                await routeResponse.json();
+
+
+            if (
+                routeData.code !== "Ok" ||
+                !routeData.routes ||
+                !routeData.routes.length
+            ) {
+                throw new Error("Route could not be found.");
+            }
+
+
+            const route =
+                routeData.routes[0];
+
+
+            // Draw route
+            const routeLine = L.geoJSON(
+                route.geometry,
+                {
+                    style: {
+                        weight: 5,
+                        opacity: 0.8
+                    }
+                }
+            ).addTo(map);
+
+
+            // Fit map to complete route
+            map.fitBounds(
+                routeLine.getBounds(),
+                {
+                    padding: [30, 30]
+                }
+            );
+
+
+            // Distance
+            const distance =
+                (route.distance / 1000).toFixed(1);
+
+
+            // Duration
+            const duration =
+                Math.round(route.duration / 3600 * 10) / 10;
+
+
+            status.innerHTML =
+                `📍 ${tripSource} → ${tripDestination}
+                 &nbsp; | &nbsp;
+                 🛣️ ${distance} km
+                 &nbsp; | &nbsp;
+                 ⏱️ ${duration} hours`;
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            status.innerHTML =
+                "⚠️ Unable to load the route. Please check the source and destination.";
+        }
+    }
+
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        loadTravelMap
+    );
+</script>
+
 {% endblock %}

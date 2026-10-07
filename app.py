@@ -377,7 +377,6 @@ def plan_trip():
     return redirect(url_for("trip_details", trip_id=new_trip.trip_id))
 
 
-@app.route("/dashboard")
 @app.route("/bashboard")
 def dashboard():
     """Dashboard view displaying the logged-in user's trips."""
@@ -748,6 +747,7 @@ def edit_trip(trip_id):
     if request.method == "POST":
         trip.source = request.form.get("source", trip.source).strip()
         trip.destination = request.form.get("destination", trip.destination).strip()
+        
         start_date_str = request.form.get("start_date")
         end_date_str = request.form.get("end_date")
         if start_date_str:

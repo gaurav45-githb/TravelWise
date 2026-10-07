@@ -29,24 +29,50 @@ Main home page
                     </div>
 
                     <div class="row g-3 align-items-end">
+
+                        <!-- SOURCE -->
                         <div class="col-md-5">
-                            <label class="form-label small fw-bold">From (Start)</label>
-                            <select class="form-select" name="source" id="source" required>
-                                <option value="Delhi">Delhi (DEL)</option>
-                                <option value="Pune">Pune (PNQ)</option>
-                                <option value="Mumbai">Mumbai (BOM)</option>
-                            </select>
+                            <label class="form-label small fw-bold">
+                                From (Start)
+                            </label>
+
+                            <div class="location-search">
+                                <input type="text" class="form-control" id="source_search"
+                                    placeholder="🔍 Search starting location..." autocomplete="off" required>
+
+                                <input type="hidden" name="source" id="source">
+
+                                <div id="source_results" class="location-results">
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-2 text-center"><button class="btn btn-light border">⇄</button></div>
+
+
+                        <!-- SWAP -->
+                        <div class="col-md-2 text-center">
+                            <button type="button" class="btn btn-light border" id="swapLocations">
+                                ⇄
+                            </button>
+                        </div>
+
+
+                        <!-- DESTINATION -->
                         <div class="col-md-5">
-                            <label class="form-label small fw-bold">To (Destination)</label>
-                            <select class="form-select" id="destination" name="destination" required>
-                                <option value="Goa">Goa (GOI)</option>
-                                <option value="Patna">Patna (PAT)</option>
-                                <option value="Jaipur">Jaipur (JAI)</option>
-                                <option value="Manali">Manali</option>
-                            </select>
+                            <label class="form-label small fw-bold">
+                                To (Destination)
+                            </label>
+
+                            <div class="location-search">
+                                <input type="text" class="form-control" id="destination_search"
+                                    placeholder="🔍 Search destination..." autocomplete="off" required>
+
+                                <input type="hidden" name="destination" id="destination">
+
+                                <div id="destination_results" class="location-results">
+                                </div>
+                            </div>
                         </div>
+
                     </div>
 
                     <div class="row g-3 mt-1">

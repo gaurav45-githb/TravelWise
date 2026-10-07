@@ -176,3 +176,46 @@ body {
         width: 49%
     }
 }
+
+
+.location-search {
+    position: relative;
+}
+
+.location-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 4px;
+    z-index: 1000;
+    max-height: 250px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.location-result {
+    padding: 10px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.location-result:hover {
+    background: #f1f5ff;
+}
+
+.location-loading {
+    padding: 10px 12px;
+    color: #777;
+    font-size: 14px;
+}
+
+.location-empty {
+    padding: 10px 12px;
+    color: #777;
+    font-size: 14px;
+}
