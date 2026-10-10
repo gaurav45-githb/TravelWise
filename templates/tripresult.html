@@ -1,7 +1,16 @@
 {% extends "base.html" %}
+
 {% block title %}Trip Plan - TravelWise{% endblock %}
+
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/tripresult.css') }}">{% endblock %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tripresult.css') }}">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<!-- for mao integration  -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+{% endblock %}
+
 {% block content %}
 <main class="container">
     {% if trip %}
@@ -11,9 +20,14 @@
     </div>
 
     <div class="trip-header">
-        <div class="trip-route"><span>{{ trip.source }}</span><span>→</span><span>{{ trip.destination }}</span></div>
-        <div class="trip-info"><span>📅 {{ duration_days }} Days</span><span>👥 {{ trip.travelers }}
-                Travelers</span><span>🚆 {{ transport.transport_type if transport else 'Not selected' }}</span></div>
+        <div class="trip-route">
+            <span>{{ trip.source }}</span><span>→</span><span>{{ trip.destination }}</span>
+        </div>
+        <div class="trip-info">
+            <span>📅 {{ duration_days }} Days</span>
+            <span>👥 {{ trip.travelers }} Travelers</span>
+            <span>🚆 {{ transport.transport_type if transport else 'Not selected' }}</span>
+        </div>
     </div>
 
     <div class="grid">
@@ -26,13 +40,15 @@
                         <div>
                             <div class="option-name">{{ transport.transport_type if transport else 'Transportation' }}
                             </div>
-                            <div class="option-detail">{{ transport.route_details if transport else trip.source ~ ' → '
-                                ~ trip.destination }}</div>
+                            <div class="option-detail">
+                                {{ transport.route_details if transport else trip.source ~ ' → ' ~ trip.destination }}
+                            </div>
                         </div>
                     </div>
                     <div class="price">₹{{ '{:,.0f}'.format(transport.estimated_cost) if transport else '—' }}</div>
                 </div>
             </div>
+
             <div class="card">
                 <h2>🏨 Accommodation</h2>
                 <div class="option">
@@ -41,14 +57,17 @@
                         <div>
                             <div class="option-name">{{ accommodation.hotel_name if accommodation else 'Accommodation'
                                 }}</div>
-                            <div class="option-detail">{{ accommodation.total_nights if accommodation else nights }}
-                                Nights • {{ accommodation.location if accommodation else 'Destination' }}</div>
+                            <div class="option-detail">
+                                {{ accommodation.total_nights if accommodation else nights }} Nights •
+                                {{ accommodation.location if accommodation else trip.destination }}
+                            </div>
                         </div>
                     </div>
                     <div class="price">₹{{ '{:,.0f}'.format(accommodation.estimated_total) if accommodation else '—' }}
                     </div>
                 </div>
             </div>
+
             <div class="card">
                 <h2>🍴 Food</h2>
                 <div class="option">
@@ -62,6 +81,7 @@
                     <div class="price">₹{{ '{:,.0f}'.format(budget.max_food_cost) if budget else '—' }}</div>
                 </div>
             </div>
+
             <div class="card">
                 <h2>🎯 Activities</h2>
                 <div class="option">
@@ -80,233 +100,269 @@
         <div>
             <div class="budget-card">
                 <div class="budget-title">💰 Trip Budget</div>
-                {% if budget %}<div class="budget-item"><span>Transportation</span><b>₹{{
-                        '{:,.0f}'.format(budget.max_transport_cost) }}</b></div>
+                {% if budget %}
+                <div class="budget-item"><span>Transportation</span><b>₹{{ '{:,.0f}'.format(budget.max_transport_cost)
+                        }}</b></div>
                 <div class="budget-item"><span>Accommodation</span><b>₹{{ '{:,.0f}'.format(budget.max_stay_cost) }}</b>
                 </div>
                 <div class="budget-item"><span>Food</span><b>₹{{ '{:,.0f}'.format(budget.max_food_cost) }}</b></div>
                 <div class="budget-item"><span>Activities</span><b>₹{{ '{:,.0f}'.format(budget.max_activity_cost) }}</b>
                 </div>
-                <div class="budget-total"><span>Total</span><span>₹{{ '{:,.0f}'.format(budget.total_max_budget)
-                        }}</span></div>{% else %}<p>No budget generated yet.</p>{% endif %}
+                <div class="budget-total">
+                    <span>Total</span><span>₹{{ '{:,.0f}'.format(budget.total_max_budget) }}</span>
+                </div>
+                {% else %}
+                <p>No budget generated yet.</p>
+                {% endif %}
             </div>
-            {% if budget %}<div class="card">
+
+            {% if budget %}
+            <div class="card">
                 <h2>Budget Range</h2>
                 <div class="budget-range">
-                    <div class="range-item"><span>Minimum</span><b>₹{{ '{:,.0f}'.format(budget.total_min_budget) }}</b>
+                    <div class="range-item">
+                        <span>Minimum</span><b>₹{{ '{:,.0f}'.format(budget.total_min_budget) }}</b>
                     </div>
-                    <div class="range-item"><span>Recommended</span><b>₹{{ '{:,.0f}'.format((budget.total_min_budget +
-                            budget.total_max_budget) / 2) }}</b></div>
-                    <div class="range-item"><span>Maximum</span><b>₹{{ '{:,.0f}'.format(budget.total_max_budget) }}</b>
+                    <div class="range-item">
+                        <span>Recommended</span>
+                        <b>₹{{ '{:,.0f}'.format((budget.total_min_budget + budget.total_max_budget) / 2) }}</b>
+                    </div>
+                    <div class="range-item">
+                        <span>Maximum</span><b>₹{{ '{:,.0f}'.format(budget.total_max_budget) }}</b>
                     </div>
                 </div>
-            </div>{% endif %}
-            <div class="buttons"><a href="{{ url_for('trip_itinerary', trip_id=trip.trip_id) }}"
-                    class="btn btn-primary">View Itinerary</a><a
-                    href="{{ url_for('trip_budget', trip_id=trip.trip_id) }}" class="btn btn-outline">View Budget</a><a
-                    href="{{ url_for('edit_trip', trip_id=trip.trip_id) }}" class="btn btn-outline">Edit Trip</a></div>
+            </div>
+            {% endif %}
+
+            <div class="buttons">
+                <a href="{{ url_for('trip_itinerary', trip_id=trip.trip_id) }}" class="btn btn-primary">View
+                    Itinerary</a>
+                <a href="{{ url_for('trip_budget', trip_id=trip.trip_id) }}" class="btn btn-outline">View Budget</a>
+                <a href="{{ url_for('edit_trip', trip_id=trip.trip_id) }}" class="btn btn-outline">Edit Trip</a>
+            </div>
         </div>
     </div>
+
+    <div class="card map-card">
+        <div class="map-header">
+            <h2>🗺️ Travel Route</h2>
+            <p>{{ trip.source }} → {{ trip.destination }}</p>
+        </div>
+        <div id="travelMap" role="region" aria-label="Map showing the route from source to destination"></div>
+        <div id="mapStatus" class="map-status" role="status" aria-live="polite">Loading route...</div>
+    </div>
+
     {% else %}
     <div class="page-title">
         <h1>No Trip Found</h1>
-        <p>Plan a trip to see your personalized result.</p><a href="{{ url_for('main') }}" class="btn btn-primary">Plan
-            a Trip</a>
+        <p>Plan a trip to see your personalized travel plan.</p>
+        <a href="{{ url_for('main') }}" class="btn btn-primary">Plan a Trip</a>
     </div>
     {% endif %}
-
-    <!-- ============================= -->
-    <!-- DYNAMIC TRAVEL MAP -->
-    <!-- ============================= -->
-
-    <div class="card map-card">
-
-        <div class="map-header">
-            <div>
-                <h2>🗺️ Travel Route</h2>
-                <p>
-                    {{ trip.source }} → {{ trip.destination }}
-                </p>
-            </div>
-        </div>
-
-        <div id="travelMap"></div>
-
-        <div id="mapStatus" class="map-status">
-            Loading route...
-        </div>
-
-    </div>
 </main>
+
+<div class="card mt-4">
+    <h4 class="mb-3">🗺️ Travel Map</h4>
+
+    <p>
+        <strong>Source:</strong> {{ trip.source }}
+        &nbsp; → &nbsp;
+        <strong>Destination:</strong> {{ trip.destination }}
+    </p>
+
+    <div id="travelMap" style="height: 400px; width: 100%; border-radius: 10px;">
+    </div>
+
+    <p id="mapStatus" class="text-secondary mt-3">
+        Loading map...
+    </p>
+</div>
+
 {% endblock %}
 
-
 {% block extra_js %}
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-
-
-    const tripSource = {{ trip.source | tojson }};
+{% if trip %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    (() => {
+        const tripSource = {{ trip.source | tojson
+    }};
     const tripDestination = {{ trip.destination | tojson }};
+    const statusElement = document.getElementById("mapStatus");
+    const mapElement = document.getElementById("travelMap");
 
     async function getCoordinates(place) {
+        const url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q="
+            + encodeURIComponent(place);
+        const response = await fetch(url, {
+            headers: { "Accept": "application/json" }
+        });
 
+        if (!response.ok) {
+            throw new Error("Location search service is unavailable.");
+        }
+
+        const results = await response.json();
+        if (!results.length) {
+            throw new Error("Could not find coordinates for " + place);
+        }
+
+        return {
+            lat: Number(results[0].lat),
+            lon: Number(results[0].lon)
+        };
+    }
+
+    async function loadTravelMap() {
+        if (!mapElement || !statusElement) return;
+
+        try {
+            if (typeof L === "undefined") {
+                throw new Error("Map library did not load.");
+            }
+
+            const [source, destination] = await Promise.all([
+                getCoordinates(tripSource),
+                getCoordinates(tripDestination)
+            ]);
+
+            const map = L.map(mapElement);
+            L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            L.marker([source.lat, source.lon]).addTo(map)
+                .bindPopup("<b>Source</b><br>" + escapeHtml(tripSource));
+            L.marker([destination.lat, destination.lon]).addTo(map)
+                .bindPopup("<b>Destination</b><br>" + escapeHtml(tripDestination));
+
+            statusElement.textContent = "Finding the driving route...";
+
+            const routeUrl = "https://router.project-osrm.org/route/v1/driving/"
+                + `${source.lon},${source.lat};${destination.lon},${destination.lat}`
+                + "?overview=full&geometries=geojson";
+
+            const routeResponse = await fetch(routeUrl);
+            if (!routeResponse.ok) {
+                throw new Error("Routing service is unavailable.");
+            }
+
+            const routeData = await routeResponse.json();
+            if (routeData.code !== "Ok" || !routeData.routes || !routeData.routes.length) {
+                throw new Error("A driving route could not be found for these locations.");
+            }
+
+            const route = routeData.routes[0];
+            const routeLine = L.geoJSON(route.geometry, {
+                style: { weight: 5, opacity: 0.85 }
+            }).addTo(map);
+
+            const bounds = routeLine.getBounds();
+            if (bounds.isValid()) {
+                map.fitBounds(bounds, { padding: [30, 30] });
+            } else {
+                map.fitBounds([
+                    [source.lat, source.lon],
+                    [destination.lat, destination.lon]
+                ], { padding: [30, 30] });
+            }
+
+            const distanceKm = (route.distance / 1000).toFixed(1);
+            const durationHours = (route.duration / 3600).toFixed(1);
+            statusElement.textContent =
+                `Route loaded: ${distanceKm} km · Approx. ${durationHours} hours by road.`;
+        } catch (error) {
+            console.error("Travel map error:", error);
+            statusElement.textContent =
+                "The route map could not be loaded. Check the locations or try again later.";
+            if (mapElement) {
+                mapElement.innerHTML =
+                    '<p class="map-fallback">Map unavailable right now. Your trip details are still available above.</p>';
+            }
+        }
+    }
+
+    function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, char => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        }[char]));
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", loadTravelMap);
+    } else {
+        loadTravelMap();
+    }
+}) ();
+</script>
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+{% if trip %}
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        const status = document.getElementById("mapStatus");
+
+        try {
+            const sourceName = {{ trip.source | tojson
+        }};
+    const destinationName = {{ trip.destination | tojson }};
+
+    async function findLocation(name) {
         const url =
-            "https://nominatim.openstreetmap.org/search" +
-            "?format=json" +
-            "&limit=1" +
-            "&q=" +
-            encodeURIComponent(place);
+            "https://nominatim.openstreetmap.org/search?format=json&limit=1&q="
+            + encodeURIComponent(name);
 
         const response = await fetch(url);
 
         if (!response.ok) {
-            throw new Error("Location service unavailable");
+            throw new Error("Location search failed");
         }
 
         const data = await response.json();
 
         if (!data.length) {
-            throw new Error("Location not found: " + place);
+            throw new Error("Location not found: " + name);
         }
 
-        return {
-            lat: Number(data[0].lat),
-            lon: Number(data[0].lon)
-        };
+        return [
+            Number(data[0].lat),
+            Number(data[0].lon)
+        ];
     }
 
+    const source = await findLocation(sourceName);
+    const destination = await findLocation(destinationName);
 
-    async function loadTravelMap() {
+    let map = window.travelWiseMap;
 
-        const status = document.getElementById("mapStatus");
-
-        try {
-
-            const source = await getCoordinates(tripSource);
-
-            const destination =
-                await getCoordinates(tripDestination);
-
-
-            // Create map
-            const map = L.map("travelMap");
-
-
-            // OpenStreetMap tiles
-            L.tileLayer(
-                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                {
-                    attribution:
-                        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }
-            ).addTo(map);
-
-
-            // Source marker
-            const sourceMarker = L.marker([
-                source.lat,
-                source.lon
-            ]).addTo(map);
-
-            sourceMarker.bindPopup(
-                `<b>📍 Source</b><br>${tripSource}`
-            );
-
-
-            // Destination marker
-            const destinationMarker = L.marker([
-                destination.lat,
-                destination.lon
-            ]).addTo(map);
-
-            destinationMarker.bindPopup(
-                `<b>📍 Destination</b><br>${tripDestination}`
-            );
-
-
-            // OSRM route
-            const routeURL =
-                "https://router.project-osrm.org/route/v1/driving/" +
-                `${source.lon},${source.lat};` +
-                `${destination.lon},${destination.lat}` +
-                "?overview=full&geometries=geojson";
-
-
-            const routeResponse =
-                await fetch(routeURL);
-
-
-            const routeData =
-                await routeResponse.json();
-
-
-            if (
-                routeData.code !== "Ok" ||
-                !routeData.routes ||
-                !routeData.routes.length
-            ) {
-                throw new Error("Route could not be found.");
-            }
-
-
-            const route =
-                routeData.routes[0];
-
-
-            // Draw route
-            const routeLine = L.geoJSON(
-                route.geometry,
-                {
-                    style: {
-                        weight: 5,
-                        opacity: 0.8
-                    }
-                }
-            ).addTo(map);
-
-
-            // Fit map to complete route
-            map.fitBounds(
-                routeLine.getBounds(),
-                {
-                    padding: [30, 30]
-                }
-            );
-
-
-            // Distance
-            const distance =
-                (route.distance / 1000).toFixed(1);
-
-
-            // Duration
-            const duration =
-                Math.round(route.duration / 3600 * 10) / 10;
-
-
-            status.innerHTML =
-                `📍 ${tripSource} → ${tripDestination}
-                 &nbsp; | &nbsp;
-                 🛣️ ${distance} km
-                 &nbsp; | &nbsp;
-                 ⏱️ ${duration} hours`;
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            status.innerHTML =
-                "⚠️ Unable to load the route. Please check the source and destination.";
-        }
+    if (!map) {
+        map = L.map("travelMap");
+        window.travelWiseMap = map;
     }
 
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        loadTravelMap
-    );
+    L.marker(source).addTo(map).bindPopup("Source: " + sourceName);
+    L.marker(destination).addTo(map).bindPopup("Destination: " + destinationName);
+
+    map.fitBounds([source, destination], { padding: [30, 30] });
+
+    status.textContent =
+        "Map loaded successfully. Next: add the route line.";
+    } catch (error) {
+        console.error("Map error:", error);
+        status.textContent =
+            "Map failed to load. Check your internet connection and browser console.";
+    }
+});
 </script>
+{% endif %}
 
+{% endif %}
 {% endblock %}
